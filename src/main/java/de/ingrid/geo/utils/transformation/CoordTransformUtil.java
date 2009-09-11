@@ -106,8 +106,8 @@ public class CoordTransformUtil {
 		CoordinateReferenceSystem inCRS = CRS.parseWKT(stringCoordsType);
 		CoordinateReferenceSystem outCRS = CRS.parseWKT(COORDS_WKT_WGS84);
 		
-		MathTransform transform = CRS.findMathTransform(inCRS, outCRS);
-		transform.transform(src, 0, dst, 0, 1);
+		MathTransform tf = CRS.findMathTransform(inCRS, outCRS);
+		tf.transform(src, 0, dst, 0, 1);
 
 		return dst;
 	}
