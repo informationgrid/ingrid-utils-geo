@@ -27,7 +27,7 @@ public class CoordTransformUtil {
 	
 	private static CoordTransformUtil	coordTransformUtil;
 	
-	public enum CoordinationType {
+	public enum CoordType {
 		COORDS_ETRS89_UTM31N, COORDS_ETRS89_UTM32N, COORDS_ETRS89_UTM33N, COORDS_ETRS89_UTM34N, COORDS_GK2, COORDS_GK3, COORDS_GK4, COORDS_GK5
 	}
 	
@@ -54,7 +54,7 @@ public class CoordTransformUtil {
 	 * @throws FactoryException 
 	 * @throws TransformException 
 	 */
-	public float[] transformToWGS84(float coordsX, float coordsY, CoordinationType coordsType)
+	public float[] transformToWGS84(float coordsX, float coordsY, CoordType coordsType)
 		throws FactoryException, TransformException {
 		
 		float[] src = new float[] { coordsX, coordsY };
