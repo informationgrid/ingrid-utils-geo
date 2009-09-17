@@ -49,14 +49,14 @@ public class CoordTransformUtil {
 	}
 	
 	/**
-	 * Coordination Transformation To WGS84
+	 * Float coordinate transformation to WGS84
 	 * 
 	 * @param coordsX
-	 *            X-Coordination of a coordination reference system
+	 *            Float x-coordinate of a coordinate reference system
 	 * @param coordsY
-	 *            Y-Coordination of a coordination reference system
+	 *            Float y-coordinate of a coordinate reference system
 	 * @param coordsType
-	 *            Define existing coordination reference system
+	 *            Define existing coordinate reference system
 	 * @return An Array with converted WGS84 values of coordsX and coordsY
 	 * @throws FactoryException 
 	 * @throws TransformException 
@@ -118,4 +118,76 @@ public class CoordTransformUtil {
 
 		return dst;
 	}
+	
+	/**
+	 * Double coordinate transformation to WGS84
+	 * 
+	 * @param coordsX
+	 *            double x-coordinate of a coordinate reference system
+	 * @param coordsY
+	 *            double y-coordinate of a coordinate reference system
+	 * @param coordsType
+	 *            Define existing coordinate reference system
+	 * @return An Array with converted WGS84 values of coordsX and coordsY
+	 * @throws FactoryException 
+	 * @throws TransformException 
+	 */
+	public double[] transformToWGS84(double coordsX, double coordsY, CoordType coordsType)
+		throws FactoryException, TransformException {
+		
+		double[] src = new double[] { coordsX, coordsY };
+		double[] dst = new double[2];
+		
+		String stringCoordsType;
+		
+		switch (coordsType) {
+			
+			// ETRS89 UTM Zone 31N
+			case COORDS_ETRS89_UTM31N:
+				stringCoordsType = COORDS_WKT_ETRS89_UTM31N;
+				break;
+			// ETRS89 UTM Zone 32N
+			case COORDS_ETRS89_UTM32N:
+				stringCoordsType = COORDS_WKT_ETRS89_UTM32N;
+				break;
+			// ETRS89 UTM Zone 33N
+			case COORDS_ETRS89_UTM33N:
+				stringCoordsType = COORDS_WKT_ETRS89_UTM33N;
+				break;
+			// ETRS89 UTM Zone 34N
+			case COORDS_ETRS89_UTM34N:
+				stringCoordsType = COORDS_WKT_ETRS89_UTM34N;
+				break;
+			// GK2
+			case COORDS_GK2:
+				stringCoordsType = COORDS_WKT_GK2;
+				break;
+			// GK3
+			case COORDS_GK3:
+				stringCoordsType = COORDS_WKT_GK3;
+				break;
+			// GK4
+			case COORDS_GK4:
+				stringCoordsType = COORDS_WKT_GK4;
+				break;
+			// GK5
+			case COORDS_GK5:
+				stringCoordsType = COORDS_WKT_GK5;
+				break;
+			// ETRS89 UTM Zone 31N
+			default:
+				stringCoordsType = COORDS_WKT_ETRS89_UTM31N;
+				break;
+			
+		}
+		
+		CoordinateReferenceSystem inCRS = CRS.parseWKT(stringCoordsType);
+		CoordinateReferenceSystem outCRS = CRS.parseWKT(COORDS_WKT_WGS84);
+
+		MathTransform tf = CRS.findMathTransform(inCRS, outCRS);
+		tf.transform(src, 0, dst, 0, 1);
+
+		return dst;
+	}
+	
 }
