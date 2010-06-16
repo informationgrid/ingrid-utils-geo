@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>de.ingrid</groupId>
 		<artifactId>ingrid-base-pom</artifactId>
-		<version>1.0.2</version>
+		<version>1.1.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.ingrid</groupId>
@@ -17,10 +17,7 @@
 		<developerConnection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-utils-geo/trunk</developerConnection>
 	</scm>
 	<repositories>
-		<!--
-			Repo of parent pom needed, parent pom may not be installed locally
-			yet
-		-->
+        <!-- NEVER DELETE: InGrid repo needed for download of parent pom if not present ! -->
 		<repository>
 			<snapshots />
 			<id>de.ingrid.m2</id>
