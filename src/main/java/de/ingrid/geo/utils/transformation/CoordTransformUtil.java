@@ -270,4 +270,36 @@ public class CoordTransformUtil {
 		return coordinateName;
 	}
 	
+	
+		
+	/**
+	 * Get name of an EPSG code.
+	 * 
+	 * @param epsgCode
+	 * @return EPSG name
+	 * 
+	 */
+	public String getNameOfEPSG(String epsgCode){
+		String epsgName = "";
+		if(epsgCode.equals(COORDS_EPSG_WGS84)){
+			epsgName = COORDS_SYSTEM_WGS84;
+		}else if(epsgCode.equals(COORDS_EPSG_ETRS89_UTM31N)){
+			epsgName = COORDS_SYSTEM_ETRS89_UTM31N;
+		}else if(epsgCode.equals(COORDS_EPSG_ETRS89_UTM32N)){
+			epsgName = COORDS_SYSTEM_ETRS89_UTM32N;
+		}else if(epsgCode.equals(COORDS_EPSG_ETRS89_UTM33N)){
+			epsgName = COORDS_SYSTEM_ETRS89_UTM33N;
+		}else if(epsgCode.equals(COORDS_EPSG_ETRS89_UTM34N)){
+			epsgName = COORDS_SYSTEM_ETRS89_UTM34N;
+		}else if(epsgCode.equals(COORDS_EPSG_GK2)){
+			epsgName = COORDS_SYSTEM_GK2;
+		}else if(epsgCode.equals(COORDS_EPSG_GK3)){
+			epsgName = COORDS_SYSTEM_GK3;
+		}else if(epsgCode.equals(COORDS_EPSG_GK4)){
+			epsgName = COORDS_SYSTEM_GK4;
+		}else if(epsgCode.equals(COORDS_EPSG_GK5)){
+			epsgName = COORDS_SYSTEM_GK5;
+		}
+		return epsgName;
+	}
 }
