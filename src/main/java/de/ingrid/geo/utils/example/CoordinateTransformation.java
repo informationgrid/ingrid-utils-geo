@@ -90,10 +90,10 @@ public class CoordinateTransformation {
 		System.out.println("fx:" + fXCoord + "\nfy:" + fYCoord);
 		
 		// WGS84
-		dXCoord = CoordTransformUtil.getInstance().transformToWGS84(4.015799478962402, 45.57944882444718, CoordType.COORD_WGS84)[0];
-		dYCoord = CoordTransformUtil.getInstance().transformToWGS84(4.015799478962402, 45.57944882444718, CoordType.COORD_WGS84)[1];
-		fXCoord = CoordTransformUtil.getInstance().transformToWGS84((float) 4.0157995, (float)45.57945, CoordType.COORD_WGS84)[0];
-		fYCoord = CoordTransformUtil.getInstance().transformToWGS84((float) 4.0157995, (float)45.57945, CoordType.COORD_WGS84)[1];
+		dXCoord = CoordTransformUtil.getInstance().transformToWGS84(4.015799478962402, 45.57944882444718, CoordType.COORDS_WGS84)[0];
+		dYCoord = CoordTransformUtil.getInstance().transformToWGS84(4.015799478962402, 45.57944882444718, CoordType.COORDS_WGS84)[1];
+		fXCoord = CoordTransformUtil.getInstance().transformToWGS84((float) 4.0157995, (float)45.57945, CoordType.COORDS_WGS84)[0];
+		fYCoord = CoordTransformUtil.getInstance().transformToWGS84((float) 4.0157995, (float)45.57945, CoordType.COORDS_WGS84)[1];
 		System.out.println("\nWGS84");
 		System.out.println("dx:" + dXCoord + "\ndy:" + dYCoord);
 		System.out.println("fx:" + fXCoord + "\nfy:" + fYCoord);
