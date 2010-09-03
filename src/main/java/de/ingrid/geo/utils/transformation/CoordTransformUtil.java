@@ -302,4 +302,35 @@ public class CoordTransformUtil {
 		}
 		return epsgName;
 	}
+	
+	/**
+	 * Get CoordType by EPSG Code
+	 * 
+	 * @param epsgCode
+	 * @return CoordType
+	 * 
+	 */
+	public CoordType getCoordTypeByEPSGCode(String epsgCode){
+		if(epsgCode.equals(COORDS_EPSG_WGS84)){
+			return CoordType.COORDS_WGS84;
+		}else if(epsgCode.equals(COORDS_EPSG_ETRS89_UTM31N)){
+			return CoordType.COORDS_ETRS89_UTM31N;
+		}else if(epsgCode.equals(COORDS_EPSG_ETRS89_UTM32N)){
+			return CoordType.COORDS_ETRS89_UTM32N;
+		}else if(epsgCode.equals(COORDS_EPSG_ETRS89_UTM33N)){
+			return CoordType.COORDS_ETRS89_UTM33N;
+		}else if(epsgCode.equals(COORDS_EPSG_ETRS89_UTM34N)){
+			return CoordType.COORDS_ETRS89_UTM34N;
+		}else if(epsgCode.equals(COORDS_EPSG_GK2)){
+			return CoordType.COORDS_GK2;
+		}else if(epsgCode.equals(COORDS_EPSG_GK3)){
+			return CoordType.COORDS_GK3;
+		}else if(epsgCode.equals(COORDS_EPSG_GK4)){
+			return CoordType.COORDS_GK4;
+		}else if(epsgCode.equals(COORDS_EPSG_GK5)){
+			return CoordType.COORDS_GK5;
+		}else{
+			return null;
+		}
+	}
 }
