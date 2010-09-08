@@ -9,11 +9,11 @@
 	<groupId>de.ingrid</groupId>
 	<artifactId>ingrid-utils-geo</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<name>ingrid-utils-geo</name>
 	<scm>
-		<connection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-utils-geo/trunk</connection>
-		<developerConnection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-utils-geo/trunk</developerConnection>
+		<connection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-utils-geo/tags/ingrid-utils-geo-1.0.1</connection>
+		<developerConnection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-utils-geo/tags/ingrid-utils-geo-1.0.1</developerConnection>
 	</scm>
 	<repositories>
         <!-- NEVER DELETE: InGrid repo needed for download of parent pom if not present ! -->
