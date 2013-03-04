@@ -3,13 +3,13 @@
 	<parent>
 		<groupId>de.ingrid</groupId>
 		<artifactId>ingrid-base-pom</artifactId>
-		<version>3.0.0</version>
+		<version>3.3.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.ingrid</groupId>
 	<artifactId>ingrid-utils-geo</artifactId>
 	<packaging>jar</packaging>
-	<version>3.1.0-SNAPSHOT</version>
+	<version>3.3.0-RELEASE-SNAPSHOT</version>
 	<name>ingrid-utils-geo</name>
 	<scm>
 		<connection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-utils-geo/trunk</connection>
@@ -19,9 +19,9 @@
         <!-- NEVER DELETE: InGrid repo needed for download of parent pom if not present ! -->
 		<repository>
 			<snapshots />
-			<id>de.ingrid.m2</id>
+			<id>de.ingrid.all</id>
 			<name>Maven2 Repo InGrid</name>
-			<url>http://harrison.its-technidata.de/ingrid/maven2</url>
+			<url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
 		</repository>
 		<repository>
 			<id>GEOTOOLS</id>
