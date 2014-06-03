@@ -26,7 +26,7 @@
 		<repository>
 			<id>GEOTOOLS</id>
 			<name>Geotools Repository</name>
-			<url>http://maven.geotools.fr/repository/</url>
+			<url>http://download.osgeo.org/webdav/geotools/</url>
 		</repository>
 	</repositories>
 	<dependencies>
