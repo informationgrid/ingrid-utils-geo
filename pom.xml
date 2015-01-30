@@ -9,12 +9,13 @@
 	<groupId>de.ingrid</groupId>
 	<artifactId>ingrid-utils-geo</artifactId>
 	<packaging>jar</packaging>
-	<version>3.5.0-SNAPSHOT</version>
+	<version>3.5.0</version>
 	<name>ingrid-utils-geo</name>
 	<scm>
 		<connection>scm:git:git@github.com:informationgrid/ingrid-utils-geo.git</connection>
 		<developerConnection>scm:git:git@github.com:informationgrid/ingrid-utils-geo.git</developerConnection>
-	</scm>
+	  <tag>ingrid-utils-geo-3.5.0</tag>
+  </scm>
 	<repositories>
         <!-- NEVER DELETE: InGrid repo needed for download of parent pom if not present ! -->
 		<repository>
