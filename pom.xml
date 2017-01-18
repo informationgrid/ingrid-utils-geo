@@ -6,7 +6,6 @@
 		<version>3.5.1</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.ingrid</groupId>
 	<artifactId>ingrid-utils-geo</artifactId>
 	<packaging>jar</packaging>
 	<version>3.6.0-SNAPSHOT</version>
@@ -25,6 +24,12 @@
 			<name>Maven2 Repo InGrid</name>
 			<url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
 		</repository>
+        <!-- next repository needed for old opengis libs -->
+        <repository>
+            <id>geotoolkit</id>
+            <name>Geotoolkit.org project</name>
+            <url>http://download.osgeo.org/webdav/geotools/</url>
+        </repository>
 	</repositories>
 	<dependencies>
 		<dependency>
