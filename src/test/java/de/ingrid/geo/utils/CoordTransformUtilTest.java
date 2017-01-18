@@ -38,6 +38,8 @@ public class CoordTransformUtilTest extends TestCase {
 		 *  WARNUNG: Can't load a service for category "MathTransformProvider". Cause is "NoClassDefFoundError: javax/media/jai/WarpAffine".
 		 * 	Unresolved by geotools.
 		 * */
+	    
+	    // Testdata can be generated at https://epsg.io
 		assertEquals(26.555676, CoordTransformUtil.getInstance().transformToWGS84((float) 2380000.0, (float) 5180000.0, CoordType.COORDS_ETRS89_UTM31N)[0], 0.0002);
 		assertEquals(44.273464, CoordTransformUtil.getInstance().transformToWGS84((float) 2380000.0, (float) 5180000.0, CoordType.COORDS_ETRS89_UTM31N)[1], 0.0002);
 		assertEquals(3.5451324, CoordTransformUtil.getInstance().transformToWGS84((float) 75000.0, (float) 5070000.0, CoordType.COORDS_ETRS89_UTM32N)[0], 0.0002);
@@ -78,6 +80,14 @@ public class CoordTransformUtilTest extends TestCase {
 		assertEquals(85.4679938, CoordTransformUtil.getInstance().transformToWGS84((float) 615142.0, (float) 5862034.0, CoordType.COORDS_ETRS89_LCC_DE)[1], 0.0002);
 		assertEquals(-64.2103372, CoordTransformUtil.getInstance().transformToWGS84((float) 615142.0, (float) 5862034.0, CoordType.COORDS_ETRS89_LAEA)[0], 0.0002);
 		assertEquals(55.7674705, CoordTransformUtil.getInstance().transformToWGS84((float) 615142.0, (float) 5862034.0, CoordType.COORDS_ETRS89_LAEA)[1], 0.0002);
+		assertEquals(25.1367122, CoordTransformUtil.getInstance().transformToWGS84((float) 2798206.0, (float) 2504688.0, CoordType.COORDS_WGS84_PM)[0], 0.0002);
+		assertEquals(21.9430412, CoordTransformUtil.getInstance().transformToWGS84((float) 2798206.0, (float) 2504688.0, CoordType.COORDS_WGS84_PM)[1], 0.0002);
+
+
+		assertEquals(10.0, CoordTransformUtil.getInstance().transformToWGS84((float) 50.0, (float) 10.0, CoordType.COORDS_CRS84)[0], 0.0002);
+		assertEquals(50.0, CoordTransformUtil.getInstance().transformToWGS84((float) 50.0, (float) 10.0, CoordType.COORDS_CRS84)[1], 0.0002);
+		assertEquals(50.0, CoordTransformUtil.getInstance().transformToWGS84((float) 50.0, (float) 10.0, CoordType.COORDS_WGS84)[0], 0.0002);
+		assertEquals(10.0, CoordTransformUtil.getInstance().transformToWGS84((float) 50.0, (float) 10.0, CoordType.COORDS_WGS84)[1], 0.0002);
 
 	}
 }
