@@ -22,6 +22,7 @@
  */
 package de.ingrid.geo.utils;
 
+import org.geotools.referencing.operation.projection.MapProjection;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.TransformException;
 
@@ -38,6 +39,10 @@ public class CoordTransformUtilTest extends TestCase {
 		 *  WARNUNG: Can't load a service for category "MathTransformProvider". Cause is "NoClassDefFoundError: javax/media/jai/WarpAffine".
 		 * 	Unresolved by geotools.
 		 * */
+	    
+	    // disable assertion due to a but in geotools
+	    // see: http://stackoverflow.com/questions/16525478/testing-a-geo-transformation-fails-in-maven-works-in-eclipse
+	    MapProjection.class.getClassLoader().setClassAssertionStatus(MapProjection.class.getName(), false);
 	    
 	    // Testdata can be generated at https://epsg.io
 		assertEquals(26.555676, CoordTransformUtil.getInstance().transformToWGS84((float) 2380000.0, (float) 5180000.0, CoordType.COORDS_ETRS89_UTM31N)[0], 0.0002);
