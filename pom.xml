@@ -1,105 +1,101 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<parent>
-		<groupId>de.ingrid</groupId>
-		<artifactId>ingrid-base-pom</artifactId>
-		<version>3.5.1</version>
-	</parent>
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>ingrid-utils-geo</artifactId>
-	<packaging>jar</packaging>
-	<version>3.6.0-SNAPSHOT</version>
-	<name>ingrid-utils-geo</name>
-	<scm>
-		<connection>scm:git:git@github.com:informationgrid/ingrid-utils-geo.git</connection>
-		<developerConnection>scm:git:git@github.com:informationgrid/ingrid-utils-geo.git</developerConnection>
-		<tag>HEAD</tag>
-	</scm>
-	<repositories>
-		<!-- NEVER DELETE: InGrid repo needed for download of parent pom if not 
-			present ! -->
-		<repository>
-			<snapshots />
-			<id>de.ingrid.all</id>
-			<name>Maven2 Repo InGrid</name>
-			<url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
-		</repository>
-        <!-- next repository needed for old opengis libs -->
-        <repository>
-            <id>geotoolkit</id>
-            <name>Geotoolkit.org project</name>
-            <url>http://download.osgeo.org/webdav/geotools/</url>
-        </repository>
-	</repositories>
-	<dependencies>
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-referencing</artifactId>
-			<version>2.5.3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-metadata</artifactId>
-			<version>2.5.3</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/javax.media/jai_core -->
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.4</version>
-		</dependency>
-		<!-- Java Advanced Imaging (JAI) -->
-		<!-- Not needed for this functionality -->
-		<dependency>
-			<groupId>javax.media</groupId>
-			<artifactId>jai_core</artifactId>
-			<version>1.1.3</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- <dependency>
-			<groupId>javax.media</groupId>
-			<artifactId>jai_codec</artifactId>
-			<version>1.1.3</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.media</groupId>
-			<artifactId>jai_imageio</artifactId>
-			<version>1.1</version>
-			<scope>test</scope>
-		</dependency> -->
-	</dependencies>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.3</version>
-				<configuration>
-					<!-- IGNORE TEST FAILURE DUE TO BUG !? -->
-					<!-- see http://jira.codehaus.org/browse/GEOT-2144 -->
-					<testFailureIgnore>true</testFailureIgnore>
-					<redirectTestOutputToFile>true</redirectTestOutputToFile>
-				</configuration>
-			</plugin>
-			<!-- Excute test executable because of problems with unit tests -->
-			<!-- mvn exec:exec -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.1.1</version>
-				<configuration>
-					<executable>java</executable>
-					<arguments>
-						<argument>-classpath</argument>
-						<!-- automatically creates the classpath using all project dependencies, 
-							also adding the project build directory -->
-						<classpath />
-						<argument>de.ingrid.geo.utils.example.CoordinateTransformation</argument>
-					</arguments>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <groupId>de.ingrid</groupId>
+    <artifactId>ingrid-base-pom</artifactId>
+    <version>4.0.1</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>ingrid-utils-geo</artifactId>
+  <packaging>jar</packaging>
+  <version>4.0.1-SNAPSHOT</version>
+  <name>ingrid-utils-geo</name>
+  <scm>
+    <connection>scm:git:git@github.com:informationgrid/ingrid-utils-geo.git</connection>
+    <developerConnection>scm:git:git@github.com:informationgrid/ingrid-utils-geo.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+  <repositories>
+    <!-- NEVER DELETE: InGrid repo needed for download of parent pom if not 
+      present ! -->
+    <repository>
+      <snapshots/>
+      <id>de.ingrid.all</id>
+      <name>Maven2 Repo InGrid</name>
+      <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
+    </repository>
+    <!-- next repository needed for old opengis libs -->
+    <repository>
+      <id>geotoolkit</id>
+      <name>Geotoolkit.org project</name>
+      <url>http://download.osgeo.org/webdav/geotools/</url>
+    </repository>
+  </repositories>
+  <dependencies>
+    <dependency>
+      <groupId>org.geotools</groupId>
+      <artifactId>gt-referencing</artifactId>
+      <version>2.5.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.geotools</groupId>
+      <artifactId>gt-metadata</artifactId>
+      <version>2.5.3</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/javax.media/jai_core -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.4</version>
+    </dependency>
+    <!-- Java Advanced Imaging (JAI) -->
+    <!-- Not needed for this functionality -->
+    <dependency>
+      <groupId>javax.media</groupId>
+      <artifactId>jai_core</artifactId>
+      <version>1.1.3</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- <dependency><groupId>javax.media</groupId><artifactId>jai_codec</artifactId><version>1.1.3</version><scope>test</scope></dependency><dependency><groupId>javax.media</groupId><artifactId>jai_imageio</artifactId><version>1.1</version><scope>test</scope></dependency>-->
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <!-- IGNORE TEST FAILURE DUE TO BUG !? -->
+          <!-- see http://jira.codehaus.org/browse/GEOT-2144 -->
+          <testFailureIgnore>true</testFailureIgnore>
+          <redirectTestOutputToFile>true</redirectTestOutputToFile>
+        </configuration>
+      </plugin>
+      <!-- Excute test executable because of problems with unit tests -->
+      <!-- mvn exec:exec -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.1.1</version>
+        <configuration>
+          <executable>java</executable>
+          <arguments>
+            <argument>-classpath</argument>
+            <!-- automatically creates the classpath using all project dependencies, 
+              also adding the project build directory -->
+            <classpath/>
+            <argument>de.ingrid.geo.utils.example.CoordinateTransformation</argument>
+          </arguments>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>external.atlassian.jgitflow</groupId>
+        <artifactId>jgitflow-maven-plugin</artifactId>
+        <version>1.0-m5.1</version>
+        <configuration>
+          <defaultOriginUrl>https://github.com/informationgrid/ingrid-utils-geo</defaultOriginUrl>
+          <noDeploy>true</noDeploy>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
