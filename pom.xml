@@ -18,7 +18,7 @@
     <!-- NEVER DELETE: InGrid repo needed for download of parent pom if not 
       present ! -->
     <repository>
-      <snapshots/>
+      <snapshots />
       <id>de.ingrid.all</id>
       <name>Maven2 Repo InGrid</name>
       <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
@@ -82,7 +82,7 @@
             <argument>-classpath</argument>
             <!-- automatically creates the classpath using all project dependencies, 
               also adding the project build directory -->
-            <classpath/>
+            <classpath />
             <argument>de.ingrid.geo.utils.example.CoordinateTransformation</argument>
           </arguments>
         </configuration>
