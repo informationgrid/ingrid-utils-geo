@@ -18,10 +18,9 @@
     <!-- NEVER DELETE: InGrid repo needed for download of parent pom if not 
       present ! -->
     <repository>
-      <snapshots />
-      <id>de.ingrid.all</id>
-      <name>Maven2 Repo InGrid</name>
-      <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
+      <id>nexus</id>
+      <name>Nexus Repo</name>
+      <url>https://nexus.informationgrid.eu/repository/maven-public</url>
     </repository>
     <!-- next repository needed for old opengis libs -->
     <repository>
