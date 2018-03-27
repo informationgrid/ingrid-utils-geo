@@ -2,12 +2,12 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-base-pom</artifactId>
-    <version>4.0.1</version>
+    <version>4.2.2</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-utils-geo</artifactId>
   <packaging>jar</packaging>
-  <version>4.0.1</version>
+  <version>4.3.0</version>
   <name>ingrid-utils-geo</name>
   <scm>
     <connection>scm:git:git@github.com:informationgrid/ingrid-utils-geo.git</connection>
@@ -18,10 +18,9 @@
     <!-- NEVER DELETE: InGrid repo needed for download of parent pom if not 
       present ! -->
     <repository>
-      <snapshots />
-      <id>de.ingrid.all</id>
-      <name>Maven2 Repo InGrid</name>
-      <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
+      <id>nexus</id>
+      <name>Nexus Repo</name>
+      <url>https://nexus.informationgrid.eu/repository/maven-public</url>
     </repository>
     <!-- next repository needed for old opengis libs -->
     <repository>
@@ -34,12 +33,12 @@
     <dependency>
       <groupId>org.geotools</groupId>
       <artifactId>gt-referencing</artifactId>
-      <version>2.5.3</version>
+      <version>8.6</version>
     </dependency>
     <dependency>
       <groupId>org.geotools</groupId>
       <artifactId>gt-metadata</artifactId>
-      <version>2.5.3</version>
+      <version>8.6</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/javax.media/jai_core -->
     <dependency>
