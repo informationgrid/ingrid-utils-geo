@@ -35,28 +35,56 @@ public class CoordinateTransformation {
 		
 		double dXCoord;
 		double dYCoord;
+        double dXCoordWGS84;
+        double dYCoordWGS84;
 		
 		float fXCoord;
 		float fYCoord;
 		
-		// ETRS89 UTM Zone 31N
-		dXCoord = CoordTransformUtil.getInstance().transformToWGS84(2380000.0, 5180000.0, CoordType.COORDS_ETRS89_UTM31N)[0];
-		dYCoord = CoordTransformUtil.getInstance().transformToWGS84(2380000.0, 5180000.0, CoordType.COORDS_ETRS89_UTM31N)[1];
+		// ETRS89 UTM Zone 31N to WGS84
+		dXCoordWGS84 = CoordTransformUtil.getInstance().transformToWGS84(2380000.0, 5180000.0, CoordType.COORDS_ETRS89_UTM31N)[0];
+		dYCoordWGS84 = CoordTransformUtil.getInstance().transformToWGS84(2380000.0, 5180000.0, CoordType.COORDS_ETRS89_UTM31N)[1];
 		fXCoord = CoordTransformUtil.getInstance().transformToWGS84((float)2380000.0, (float)5180000.0, CoordType.COORDS_ETRS89_UTM31N)[0];
 		fYCoord = CoordTransformUtil.getInstance().transformToWGS84((float)2380000.0, (float)5180000.0, CoordType.COORDS_ETRS89_UTM31N)[1];
-		System.out.println("\nETRS89 UTM Zone 31N");
-		System.out.println("dx:" + dXCoord + "\ndy:" + dYCoord);
+		System.out.println("\nETRS89 UTM Zone 31N to WGS84");
+        System.out.println("  2380000.0, 5180000.0 ->");
+		System.out.println("dx:" + dXCoordWGS84 + "\ndy:" + dYCoordWGS84);
 		System.out.println("fx:" + fXCoord + "\nfy:" + fYCoord);
 		
-		// ETRS89 UTM Zone 32N
-		dXCoord = CoordTransformUtil.getInstance().transformToWGS84(75000.0, 5070000.0, CoordType.COORDS_ETRS89_UTM32N)[0];
-		dYCoord = CoordTransformUtil.getInstance().transformToWGS84(75000.0, 5070000.0, CoordType.COORDS_ETRS89_UTM32N)[1];
+        // WGS84 to ETRS89 UTM Zone 31N 
+        dXCoord = CoordTransformUtil.getInstance().transform(dXCoordWGS84, dYCoordWGS84, CoordType.COORDS_WGS84, CoordType.COORDS_ETRS89_UTM31N)[0];
+        dYCoord = CoordTransformUtil.getInstance().transform(dXCoordWGS84, dYCoordWGS84, CoordType.COORDS_WGS84, CoordType.COORDS_ETRS89_UTM31N)[1];
+        fXCoord = CoordTransformUtil.getInstance().transform((float)dXCoordWGS84, (float)dYCoordWGS84, CoordType.COORDS_WGS84, CoordType.COORDS_ETRS89_UTM31N)[0];
+        fYCoord = CoordTransformUtil.getInstance().transform((float)dXCoordWGS84, (float)dYCoordWGS84, CoordType.COORDS_WGS84, CoordType.COORDS_ETRS89_UTM31N)[1];
+        System.out.println("\nWGS84 to ETRS89 UTM Zone 31N");
+        System.out.println("  " + dXCoordWGS84 +", " + dYCoordWGS84 + " ->");
+        System.out.println("dx:" + dXCoord + "\ndy:" + dYCoord);
+        System.out.println("fx:" + fXCoord + "\nfy:" + fYCoord);
+
+        System.out.println("\n-------------------------------");
+
+		// ETRS89 UTM Zone 32N to WGS84
+        dXCoordWGS84 = CoordTransformUtil.getInstance().transformToWGS84(75000.0, 5070000.0, CoordType.COORDS_ETRS89_UTM32N)[0];
+        dYCoordWGS84 = CoordTransformUtil.getInstance().transformToWGS84(75000.0, 5070000.0, CoordType.COORDS_ETRS89_UTM32N)[1];
 		fXCoord = CoordTransformUtil.getInstance().transformToWGS84((float) 75000.0, (float)5070000.0, CoordType.COORDS_ETRS89_UTM32N)[0];
 		fYCoord = CoordTransformUtil.getInstance().transformToWGS84((float) 75000.0, (float)5070000.0, CoordType.COORDS_ETRS89_UTM32N)[1];
-		System.out.println("\nETRS89 UTM Zone 32N");
-		System.out.println("dx:" + dXCoord + "\ndy:" + dYCoord);
+		System.out.println("\nETRS89 UTM Zone 32N to WGS84");
+        System.out.println("  75000.0, 5070000.0 ->");
+		System.out.println("dx:" + dXCoordWGS84 + "\ndy:" + dYCoordWGS84);
 		System.out.println("fx:" + fXCoord + "\nfy:" + fYCoord);
 		
+        // WGS84 to ETRS89 UTM Zone 32N
+        dXCoord = CoordTransformUtil.getInstance().transform(dXCoordWGS84, dYCoordWGS84, CoordType.COORDS_WGS84, CoordType.COORDS_ETRS89_UTM32N)[0];
+        dYCoord = CoordTransformUtil.getInstance().transform(dXCoordWGS84, dYCoordWGS84, CoordType.COORDS_WGS84, CoordType.COORDS_ETRS89_UTM32N)[1];
+        fXCoord = CoordTransformUtil.getInstance().transform((float) dXCoordWGS84, (float)dYCoordWGS84, CoordType.COORDS_WGS84, CoordType.COORDS_ETRS89_UTM32N)[0];
+        fYCoord = CoordTransformUtil.getInstance().transform((float) dXCoordWGS84, (float)dYCoordWGS84, CoordType.COORDS_WGS84, CoordType.COORDS_ETRS89_UTM32N)[1];
+        System.out.println("\nWGS84 to ETRS89 UTM Zone 32N");
+        System.out.println("  " + dXCoordWGS84 +", " + dYCoordWGS84 + " ->");
+        System.out.println("dx:" + dXCoord + "\ndy:" + dYCoord);
+        System.out.println("fx:" + fXCoord + "\nfy:" + fYCoord);
+        
+        System.out.println("\n-------------------------------");
+
 		// ETRS89 UTM Zone 33N
 		dXCoord = CoordTransformUtil.getInstance().transformToWGS84(-425000.0, 5020000.0, CoordType.COORDS_ETRS89_UTM33N)[0];
 		dYCoord = CoordTransformUtil.getInstance().transformToWGS84(-425000.0, 5020000.0, CoordType.COORDS_ETRS89_UTM33N)[1];

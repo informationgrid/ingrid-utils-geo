@@ -47,8 +47,14 @@ public class CoordTransformUtilTest extends TestCase {
 	    // Testdata can be generated at https://epsg.io
 		assertEquals(26.555676, CoordTransformUtil.getInstance().transformToWGS84((float) 2380000.0, (float) 5180000.0, CoordType.COORDS_ETRS89_UTM31N)[0], 0.0002);
 		assertEquals(44.273464, CoordTransformUtil.getInstance().transformToWGS84((float) 2380000.0, (float) 5180000.0, CoordType.COORDS_ETRS89_UTM31N)[1], 0.0002);
+        assertEquals(2380000.0, CoordTransformUtil.getInstance().transform((float) 26.555676, (float) 44.273464, CoordType.COORDS_WGS84, CoordType.COORDS_ETRS89_UTM31N)[0], 100.00);
+        assertEquals(5180000.0, CoordTransformUtil.getInstance().transform((float) 26.555676, (float) 44.273464, CoordType.COORDS_WGS84, CoordType.COORDS_ETRS89_UTM31N)[1], 100.00);
+
 		assertEquals(3.5451324, CoordTransformUtil.getInstance().transformToWGS84((float) 75000.0, (float) 5070000.0, CoordType.COORDS_ETRS89_UTM32N)[0], 0.0002);
 		assertEquals(45.653145, CoordTransformUtil.getInstance().transformToWGS84((float) 75000.0, (float) 5070000.0, CoordType.COORDS_ETRS89_UTM32N)[1], 0.0002);
+        assertEquals(75000.0, CoordTransformUtil.getInstance().transform((float) 3.5451324, (float) 45.653145, CoordType.COORDS_WGS84, CoordType.COORDS_ETRS89_UTM32N)[0], 0.02);
+        assertEquals(5070000.0, CoordTransformUtil.getInstance().transform((float) 3.5451324, (float) 45.653145, CoordType.COORDS_WGS84, CoordType.COORDS_ETRS89_UTM32N)[1], 0.02);
+
 		assertEquals(3.3184357, CoordTransformUtil.getInstance().transformToWGS84((float) -425000.0, (float) 5020000.0, CoordType.COORDS_ETRS89_UTM33N)[0], 0.0002);
 		assertEquals(44.731895, CoordTransformUtil.getInstance().transformToWGS84((float) -425000.0, (float) 5020000.0, CoordType.COORDS_ETRS89_UTM33N)[1], 0.0002);
 		assertEquals(10.7116561, CoordTransformUtil.getInstance().transformToWGS84((float) 615142.0, (float) 5862034.0, CoordType.COORDS_ETRS89_UTM32N_NE)[0], 0.0002);

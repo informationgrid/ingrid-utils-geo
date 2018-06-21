@@ -127,9 +127,9 @@ public class CoordTransformUtil {
      * Float coordinate transformation to WGS84
      *
      * @param coordsX
-     *            Float x-coordinate of a coordinate reference system
+     *            float x-coordinate of a coordinate reference system
      * @param coordsY
-     *            Float y-coordinate of a coordinate reference system
+     *            float y-coordinate of a coordinate reference system
      * @param coordsType
      *            Define existing coordinate reference system
      * @return An Array with converted WGS84 values of coordsX and coordsY
@@ -137,12 +137,31 @@ public class CoordTransformUtil {
      * @throws TransformException
      */
     public float[] transformToWGS84(float coordsX, float coordsY, CoordType coordsType) throws FactoryException, TransformException {
+        return transform(coordsX, coordsY, coordsType, CoordType.COORDS_WGS84);
+    }
+
+    /**
+     * Float coordinate transformation with arbitrary coordinate systems.
+     *
+     * @param coordsX
+     *            float x-coordinate of a coordinate reference system
+     * @param coordsY
+     *            float y-coordinate of a coordinate reference system
+     * @param inCoordType
+     *            Coordinate reference system of given point
+     * @param outCoordType
+     *            Coordinate reference system to transform to
+     * @return An Array with converted values of coordsX and coordsY
+     * @throws FactoryException
+     * @throws TransformException
+     */
+    public float[] transform(float coordsX, float coordsY, CoordType inCoordType, CoordType outCoordType) throws FactoryException, TransformException {
 
         float[] src = new float[] { coordsX, coordsY };
         float[] dst = new float[2];
 
-        CoordinateReferenceSystem inCRS = CRS.parseWKT(getWKTString(coordsType));
-        CoordinateReferenceSystem outCRS = CRS.parseWKT(COORDS_WKT_WGS84);
+        CoordinateReferenceSystem inCRS = CRS.parseWKT(getWKTString(inCoordType));
+        CoordinateReferenceSystem outCRS = CRS.parseWKT(getWKTString(outCoordType));
 
         MathTransform tf = CRS.findMathTransform(inCRS, outCRS);
         tf.transform(src, 0, dst, 0, 1);
@@ -164,12 +183,31 @@ public class CoordTransformUtil {
      * @throws TransformException
      */
     public double[] transformToWGS84(double coordsX, double coordsY, CoordType coordsType) throws FactoryException, TransformException {
+        return transform(coordsX, coordsY, coordsType, CoordType.COORDS_WGS84);
+    }
+
+    /**
+     * Double coordinate transformation with arbitrary coordinate systems.
+     *
+     * @param coordsX
+     *            double x-coordinate of a coordinate reference system
+     * @param coordsY
+     *            double y-coordinate of a coordinate reference system
+     * @param inCoordType
+     *            Coordinate reference system of given point
+     * @param outCoordType
+     *            Coordinate reference system to transform to
+     * @return An Array with converted values of coordsX and coordsY
+     * @throws FactoryException
+     * @throws TransformException
+     */
+    public double[] transform(double coordsX, double coordsY, CoordType inCoordType, CoordType outCoordType) throws FactoryException, TransformException {
 
         double[] src = new double[] { coordsX, coordsY };
         double[] dst = new double[2];
 
-        CoordinateReferenceSystem inCRS = CRS.parseWKT(getWKTString(coordsType));
-        CoordinateReferenceSystem outCRS = CRS.parseWKT(COORDS_WKT_WGS84);
+        CoordinateReferenceSystem inCRS = CRS.parseWKT(getWKTString(inCoordType));
+        CoordinateReferenceSystem outCRS = CRS.parseWKT(getWKTString(outCoordType));
 
         MathTransform tf = CRS.findMathTransform(inCRS, outCRS);
         tf.transform(src, 0, dst, 0, 1);
