@@ -22,11 +22,17 @@
       <name>Nexus Repo</name>
       <url>https://nexus.informationgrid.eu/repository/maven-public</url>
     </repository>
-    <!-- next repository needed for old opengis libs -->
+    <!-- repositories needed for old opengis libs -->
+    <!-- added icm repo cause geotoolkit repo is down ? -->
     <repository>
       <id>geotoolkit</id>
       <name>Geotoolkit.org project</name>
       <url>http://download.osgeo.org/webdav/geotools/</url>
+    </repository>
+    <repository>
+      <id>icm</id>
+      <name>ICM Repository</name>
+      <url>http://maven.icm.edu.pl/artifactory/repo/</url>
     </repository>
   </repositories>
   <dependencies>
