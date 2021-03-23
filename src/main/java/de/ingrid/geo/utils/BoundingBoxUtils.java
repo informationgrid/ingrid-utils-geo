@@ -1,4 +1,4 @@
-/*-
+/*
  * **************************************************-
  * ingrid-utils-geo
  * ==================================================
@@ -25,7 +25,6 @@ package de.ingrid.geo.utils;
 import java.awt.geom.Point2D;
 
 import org.geotools.referencing.GeodeticCalculator;
-import org.geotools.referencing.crs.DefaultGeographicCRS;
 
 public class BoundingBoxUtils {
 
