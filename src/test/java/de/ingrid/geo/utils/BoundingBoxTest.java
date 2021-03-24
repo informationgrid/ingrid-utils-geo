@@ -34,9 +34,9 @@ public class BoundingBoxTest extends TestCase {
 
     public void testDistance() {
         assertNotNull(Utils.getDistance(coord1, coord2));
-        assertNotNull(BoundingBoxUtils.getSquareBoxOfBoundingBox(coord1, coord2));
-        assertNotNull(BoundingBoxUtils.getSquareBoxOfBoundingBox(coord3, coord4));
-        assertNotNull(BoundingBoxUtils.getSquareBoxOfPoint( coord1[0], coord1[1], 100));
+        assertNotNull(BoundingBoxUtils.getInstance().getSquareBoxOfBoundingBox(coord1, coord2));
+        assertNotNull(BoundingBoxUtils.getInstance().getSquareBoxOfBoundingBox(coord3, coord4));
+        assertNotNull(BoundingBoxUtils.getInstance().getSquareBoxOfPoint( coord1[0], coord1[1], 100));
     }
     
 }

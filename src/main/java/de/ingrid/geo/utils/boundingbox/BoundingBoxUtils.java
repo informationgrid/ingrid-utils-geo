@@ -42,7 +42,7 @@ public class BoundingBoxUtils {
         return boundingBoxUtils;
     }
 
-    public static float[] getSquareBoxOfPoint( float longitude, float latitude, double distance ) {
+    public float[] getSquareBoxOfPoint( float longitude, float latitude, double distance ) {
         
         GeodeticCalculator calc = new GeodeticCalculator();
         calc.setStartingGeographicPoint( longitude, latitude );
@@ -76,7 +76,7 @@ public class BoundingBoxUtils {
      * @param distance in meters
      * @return Bounding Box [[minx, miny] [maxx, maxy]] in WGS84
      */
-    public static double[] getSquareBoxOfPoint( double longitude, double latitude, double distance ) {
+    public double[] getSquareBoxOfPoint( double longitude, double latitude, double distance ) {
         
         GeodeticCalculator calc = new GeodeticCalculator();
         calc.setStartingGeographicPoint( longitude, latitude );
@@ -101,7 +101,7 @@ public class BoundingBoxUtils {
         return box;
     }
 
-    public static float[] getSquareBoxOfBoundingBox(float y1, float x1, float y2, float x2) {
+    public float[] getSquareBoxOfBoundingBox(float y1, float x1, float y2, float x2) {
         float[] c1 = {y1, x1};
         float[] c2 = {y2, x2};
         return getSquareBoxOfBoundingBox(c1, c2);
@@ -114,7 +114,7 @@ public class BoundingBoxUtils {
      * @param c2 longitude and latitude [maxx, maxy] in WGS84
      * @return Bounding Box [[minx, miny] [maxx, maxy]] in WGS84
      */
-    public static float[] getSquareBoxOfBoundingBox(float[] c1, float[] c2) {
+    public float[] getSquareBoxOfBoundingBox(float[] c1, float[] c2) {
 
         double distance = 0;
 
@@ -125,10 +125,10 @@ public class BoundingBoxUtils {
         float latitude2 = c2[1];
         
         float[] c1Yc2X = { longitude2, latitude1 };
-        double distance0 = Utils.getDistance(c1, c1Yc2X);
+        double distance0 = Utils.getInstance().getDistance(c1, c1Yc2X);
 
         float[] c1Xc2Y = { longitude1, latitude2};
-        double distance90 = Utils.getDistance(c1, c1Xc2Y);
+        double distance90 = Utils.getInstance().getDistance(c1, c1Xc2Y);
 
         GeodeticCalculator calc = new GeodeticCalculator();
         calc.setStartingGeographicPoint( longitude1, latitude1 );
@@ -158,7 +158,7 @@ public class BoundingBoxUtils {
         return box;
     }
 
-    public static double[] getSquareBoxOfBoundingBox(double y1, double x1, double y2, double x2) {
+    public double[] getSquareBoxOfBoundingBox(double y1, double x1, double y2, double x2) {
         double[] c1 = {y1, x1};
         double[] c2 = {y2, x2};
         return getSquareBoxOfBoundingBox(c1, c2);
@@ -170,7 +170,7 @@ public class BoundingBoxUtils {
      * @param c2 longitude and latitude [maxx, maxy] in WGS84
      * @return Bounding Box [[minx, miny] [maxx, maxy]] in WGS84
      */
-    public static double[] getSquareBoxOfBoundingBox(double[] c1, double[] c2) {
+    public double[] getSquareBoxOfBoundingBox(double[] c1, double[] c2) {
 
         double distance = 0;
 

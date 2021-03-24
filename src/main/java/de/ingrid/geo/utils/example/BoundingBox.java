@@ -51,40 +51,40 @@ public class BoundingBox {
         float[] coord7 = { (float) coord3x, (float) coord3y}; 
         float[] coord8 = { (float) coord4x, (float) coord4y};
 
-        double[] bbox1 = BoundingBoxUtils.getSquareBoxOfBoundingBox(coord1, coord2);
+        double[] bbox1 = BoundingBoxUtils.getInstance().getSquareBoxOfBoundingBox(coord1, coord2);
 
         System.out.println(bbox1[0]);
         System.out.println(bbox1[1]);
         System.out.println(bbox1[2]);
         System.out.println(bbox1[3]);
 
-        double[] bbox2 = BoundingBoxUtils.getSquareBoxOfBoundingBox(coord3, coord4);
+        double[] bbox2 = BoundingBoxUtils.getInstance().getSquareBoxOfBoundingBox(coord3, coord4);
         
         System.out.println(bbox2[0]);
         System.out.println(bbox2[1]);
         System.out.println(bbox2[2]);
         System.out.println(bbox2[3]);
 
-        double[] bbox3 = BoundingBoxUtils.getSquareBoxOfPoint( coord1[0], coord1[1], 100.0 );
+        double[] bbox3 = BoundingBoxUtils.getInstance().getSquareBoxOfPoint( coord1[0], coord1[1], 100.0 );
 
         System.out.println(bbox3[0]);
         System.out.println(bbox3[1]);
         System.out.println(bbox3[2]);
         System.out.println(bbox3[3]);
 
-        double distance1 = Utils.getDistance(coord1, coord2);
+        double distance1 = Utils.getInstance().getDistance(coord1, coord2);
 
         System.out.println("Double distance: " + distance1);
 
-        double distance2 = Utils.getDistance(coord1x, coord1y, coord2x, coord2y);
+        double distance2 = Utils.getInstance().getDistance(coord1x, coord1y, coord2x, coord2y);
 
         System.out.println("Double distance: " + distance2);
 
-        float distance3 = Utils.getDistance(coord5, coord6);
+        float distance3 = Utils.getInstance().getDistance(coord5, coord6);
 
         System.out.println("Float distance: " + distance3);
 
-        float distance4 = Utils.getDistance((float) coord1x, (float) coord1y, (float) coord2x, (float) coord2y);
+        float distance4 = Utils.getInstance().getDistance((float) coord1x, (float) coord1y, (float) coord2x, (float) coord2y);
 
         System.out.println("Float distance: " + distance4);
 
