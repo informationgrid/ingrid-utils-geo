@@ -22,42 +22,71 @@
  */
 package de.ingrid.geo.utils.example;
 
-import de.ingrid.geo.utils.BoundingBoxUtils;
 import de.ingrid.geo.utils.Utils;
+import de.ingrid.geo.utils.boundingbox.BoundingBoxUtils;
 
 public class BoundingBox {
     
     public static void main(String[] args) {
 
-        double[] coord1 = { 8.22971710656067, 53.3197061130618};
-        double[] coord2 = { 10.5035995762954, 54.1281513544974};
-        double[] coord3 = { 6.92009188388852, 52.9777914432664}; 
-        double[] coord4 = { 9.07744917466639, 54.407905432226};
+        double coord1x = 8.22971710656067;
+        double coord1y = 53.3197061130618;
 
-        double[][] bbox1 = BoundingBoxUtils.getSquareBoxOfBoundingBox(coord1, coord2);
+        double coord2x = 10.5035995762954;
+        double coord2y = 54.1281513544974;
+
+        double coord3x = 6.92009188388852;
+        double coord3y = 52.9777914432664;
+
+        double coord4x = 9.07744917466639;
+        double coord4y = 54.407905432226;
+
+        double[] coord1 = { coord1x, coord1y};
+        double[] coord2 = { coord2x, coord2y};
+        double[] coord3 = { coord3x, coord3y}; 
+        double[] coord4 = { coord4x, coord4y};
+
+        float[] coord5 = { (float) coord1x, (float) coord1y};
+        float[] coord6 = { (float) coord2x, (float) coord2y};
+        float[] coord7 = { (float) coord3x, (float) coord3y}; 
+        float[] coord8 = { (float) coord4x, (float) coord4y};
+
+        double[] bbox1 = BoundingBoxUtils.getSquareBoxOfBoundingBox(coord1, coord2);
+
+        System.out.println(bbox1[0]);
+        System.out.println(bbox1[1]);
+        System.out.println(bbox1[2]);
+        System.out.println(bbox1[3]);
+
+        double[] bbox2 = BoundingBoxUtils.getSquareBoxOfBoundingBox(coord3, coord4);
         
-        System.out.println(bbox1[0][0]);
-        System.out.println(bbox1[0][1]);
-        System.out.println(bbox1[1][0]);
-        System.out.println(bbox1[1][1]);
+        System.out.println(bbox2[0]);
+        System.out.println(bbox2[1]);
+        System.out.println(bbox2[2]);
+        System.out.println(bbox2[3]);
 
-        double[][] bbox2 = BoundingBoxUtils.getSquareBoxOfBoundingBox(coord3, coord4);
-        
-        System.out.println(bbox2[0][0]);
-        System.out.println(bbox2[0][1]);
-        System.out.println(bbox2[1][0]);
-        System.out.println(bbox2[1][1]);
+        double[] bbox3 = BoundingBoxUtils.getSquareBoxOfPoint( coord1[0], coord1[1], 100.0 );
 
-        double[][] bbox3 = BoundingBoxUtils.getSquareBoxOfPoint( coord1[0], coord1[1], 100.0 );
+        System.out.println(bbox3[0]);
+        System.out.println(bbox3[1]);
+        System.out.println(bbox3[2]);
+        System.out.println(bbox3[3]);
 
-        System.out.println(bbox3[0][0]);
-        System.out.println(bbox3[0][1]);
-        System.out.println(bbox3[1][0]);
-        System.out.println(bbox3[1][1]);
+        double distance1 = Utils.getDistance(coord1, coord2);
 
-        double distance = Utils.getDistance(coord1, coord2);
+        System.out.println("Double distance: " + distance1);
 
-        System.out.println(distance);
+        double distance2 = Utils.getDistance(coord1x, coord1y, coord2x, coord2y);
+
+        System.out.println("Double distance: " + distance2);
+
+        float distance3 = Utils.getDistance(coord5, coord6);
+
+        System.out.println("Float distance: " + distance3);
+
+        float distance4 = Utils.getDistance((float) coord1x, (float) coord1y, (float) coord2x, (float) coord2y);
+
+        System.out.println("Float distance: " + distance4);
 
     }
     

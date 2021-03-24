@@ -22,6 +22,7 @@
  */
 package de.ingrid.geo.utils;
 
+import de.ingrid.geo.utils.boundingbox.BoundingBoxUtils;
 import junit.framework.TestCase;
 
 public class BoundingBoxTest extends TestCase {
