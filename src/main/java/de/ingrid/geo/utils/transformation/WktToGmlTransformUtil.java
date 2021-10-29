@@ -6,8 +6,13 @@ import com.vividsolutions.jts.io.WKTReader;
 import org.geotools.gml3.GML;
 import org.geotools.gml3.GMLConfiguration;
 import org.geotools.xml.Encoder;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javax.xml.namespace.QName;
+import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -21,12 +26,56 @@ public final class WktToGmlTransformUtil {
 	 * Converts the given geometry from WKT to GML3.
 	 *
 	 * @param wkt geometry to convert as WKT
-	 * @return the given geometry converted to GML3
+	 * @return the given geometry converted to GML3 as a String object
 	 *
 	 * @throws ParseException if the WKT String cannot be parsed
 	 * @throws IOException if there is an error constructing the GML string
 	 */
-	public static String wktToGml3(String wkt) throws ParseException, IOException {
+	public static String wktToGml3AsString(String wkt) throws ParseException, IOException {
+		try {
+			String gml = wktToGml3(wkt, String.class);
+
+			// Remove namespace declarations
+			int idx0 = gml.indexOf(' ');
+			int idx1 = gml.indexOf('>');
+			String str = gml.substring(idx0, idx1);
+			gml = gml.replace(str, "");
+
+			// Add id Attributes
+			return gml.replaceAll("<gml:(Point|MultiPoint|LineString|MultiLineString|Polygon|MultiPolygon|MultiGeometry)\\b", "<gml:$1 gml:id=\"$1_ID_" + UUID.randomUUID() + "\"");
+		} catch (TransformerException|SAXException e) {
+			// Should never happen
+			throw new RuntimeException("Unexpected error while converting WKT to GML3", e);
+		}
+	}
+
+
+	/**
+	 * Converts the given geometry from WKT to GML3.
+	 *
+	 * @param wkt geometry to convert as WKT
+	 * @return the given geometry converted to GML3 as a DOM Document
+	 *
+	 * @throws ParseException if the WKT String cannot be parsed
+	 * @throws IOException if there is an error constructing the GML DOM document
+	 * @throws TransformerException if there is an error constructing the GML DOM document
+	 * @throws SAXException if there is an error constructing the GML DOM document
+	 */
+	public static Document wktToGml3AsDom(String wkt) throws ParseException, IOException, TransformerException, SAXException	{
+		Document doc = wktToGml3(wkt, Document.class);
+		String[] tagNames = {"Point", "MultiPoint", "LineString", "MultiLineString", "Polygon", "MultiPolygon", "MultiGeometry"};
+		for(String tagName: tagNames) {
+			NodeList tags = doc.getElementsByTagName("gml:" + tagName);
+			for(int i=0; i<tags.getLength(); i++) {
+				Element element = (Element) tags.item(i);
+				element.setAttribute("gml:id", tagName + "_ID_" + UUID.randomUUID());
+			}
+		}
+
+		return doc;
+	}
+
+	private static <T> T wktToGml3(String wkt, Class<T> klasse) throws ParseException, IOException, TransformerException, SAXException {
 		// Adapted from https://gis.stackexchange.com/a/244875
 		WKTReader reader = new WKTReader();
 		Geometry geometry = reader.read(wkt);
@@ -54,16 +103,17 @@ public final class WktToGmlTransformUtil {
 		Encoder encoder = new Encoder(config);
 		encoder.setOmitXMLDeclaration(true);
 
-		String gml =  encoder.encodeAsString(geometry, qName);
-
-		// Remove namespace declarations
-		int idx0 = gml.indexOf(' ');
-		int idx1 = gml.indexOf('>');
-		String str = gml.substring(idx0, idx1);
-		gml = gml.replace(str, "");
-
-		// Add id Attributes
-		return gml.replaceAll("<gml:(Point|MultiPoint|LineString|MultiLineString|Polygon|MultiPolygon|MultiGeometry)\\b", "<gml:$1 gml:id=\"$1_ID_" + UUID.randomUUID() + "\"");
+		if (klasse == String.class) {
+			@SuppressWarnings("unchecked")
+			T t = (T) encoder.encodeAsString(geometry, qName);
+			return t;
+		} else if(klasse == Document.class) {
+			@SuppressWarnings("unchecked")
+			T t = (T) encoder.encodeAsDOM(geometry, qName);
+			return t;
+		} else {
+			throw new IllegalArgumentException("Cannot convert to type: " + klasse.getName());
+		}
 	}
 }
 
