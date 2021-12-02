@@ -115,5 +115,60 @@ public final class WktToGmlTransformUtil {
 			throw new IllegalArgumentException("Cannot convert to type: " + klasse.getName());
 		}
 	}
+
+    public static Document wktToGml3_2AsDom(String wkt) throws ParseException, IOException, TransformerException, SAXException    {
+        Document doc = wktToGml3_2(wkt, Document.class);
+        String[] tagNames = {"Point", "MultiPoint", "LineString", "MultiLineString", "Polygon", "MultiPolygon", "MultiGeometry"};
+        for(String tagName: tagNames) {
+            NodeList tags = doc.getElementsByTagName("gml:" + tagName);
+            for(int i=0; i<tags.getLength(); i++) {
+                Element element = (Element) tags.item(i);
+                element.setAttribute("gml:id", tagName + "_ID_" + UUID.randomUUID());
+            }
+        }
+
+        return doc;
+    }
+
+    private static <T> T wktToGml3_2(String wkt, Class<T> klasse) throws ParseException, IOException, TransformerException, SAXException {
+        // Adapted from https://gis.stackexchange.com/a/244875
+        WKTReader reader = new WKTReader();
+        Geometry geometry = reader.read(wkt);
+
+        QName qName;
+        if (geometry instanceof Point) {
+            qName = org.geotools.gml3.v3_2.GML.Point;
+        } else if (geometry instanceof MultiPoint) {
+            qName = org.geotools.gml3.v3_2.GML.MultiPoint;
+        } else if (geometry instanceof LineString) {
+            qName = org.geotools.gml3.v3_2.GML.LineString;
+        } else if (geometry instanceof MultiLineString) {
+            qName = org.geotools.gml3.v3_2.GML.MultiCurve;
+        } else if (geometry instanceof Polygon) {
+            qName = org.geotools.gml3.v3_2.GML.Polygon;
+        } else if (geometry instanceof MultiPolygon) {
+            qName = org.geotools.gml3.v3_2.GML.MultiSurface;
+        } else if (geometry instanceof GeometryCollection) {
+            qName = org.geotools.gml3.v3_2.GML.MultiGeometry;
+        } else {
+            throw new IllegalArgumentException("Geometry type is currently not supported: " + geometry.getGeometryType());
+        }
+
+        org.geotools.gml3.v3_2.GMLConfiguration config = new org.geotools.gml3.v3_2.GMLConfiguration();
+        Encoder encoder = new Encoder(config);
+        encoder.setOmitXMLDeclaration(true);
+
+        if (klasse == String.class) {
+            @SuppressWarnings("unchecked")
+            T t = (T) encoder.encodeAsString(geometry, qName);
+            return t;
+        } else if(klasse == Document.class) {
+            @SuppressWarnings("unchecked")
+            T t = (T) encoder.encodeAsDOM(geometry, qName);
+            return t;
+        } else {
+            throw new IllegalArgumentException("Cannot convert to type: " + klasse.getName());
+        }
+    }
 }
 
