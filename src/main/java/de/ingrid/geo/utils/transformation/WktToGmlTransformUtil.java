@@ -116,6 +116,24 @@ public final class WktToGmlTransformUtil {
 		}
 	}
 
+    public static String wktToGml3_2AsString(String wkt) throws ParseException, IOException {
+        try {
+            String gml = wktToGml3_2(wkt, String.class);
+
+            // Remove namespace declarations
+            int idx0 = gml.indexOf(' ');
+            int idx1 = gml.indexOf('>');
+            String str = gml.substring(idx0, idx1);
+            gml = gml.replace(str, "");
+
+            // Add id Attributes
+            return gml.replaceAll("<gml:(Point|MultiPoint|LineString|MultiLineString|Polygon|MultiPolygon|MultiGeometry)\\b", "<gml:$1 gml:id=\"$1_ID_" + UUID.randomUUID() + "\"");
+        } catch (TransformerException|SAXException e) {
+            // Should never happen
+            throw new RuntimeException("Unexpected error while converting WKT to GML3", e);
+        }
+    }
+
     public static Document wktToGml3_2AsDom(String wkt) throws ParseException, IOException, TransformerException, SAXException    {
         Document doc = wktToGml3_2(wkt, Document.class);
         String[] tagNames = {"Point", "MultiPoint", "LineString", "MultiLineString", "Polygon", "MultiPolygon", "MultiGeometry"};
