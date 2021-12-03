@@ -1,20 +1,30 @@
 package de.ingrid.geo.utils.transformation;
 
-import com.vividsolutions.jts.geom.*;
-import com.vividsolutions.jts.io.ParseException;
-import com.vividsolutions.jts.io.WKTReader;
+import java.io.IOException;
+import java.util.UUID;
+
+import javax.xml.namespace.QName;
+import javax.xml.transform.TransformerException;
+
 import org.geotools.gml3.GML;
 import org.geotools.gml3.GMLConfiguration;
+import org.geotools.xml.Configuration;
 import org.geotools.xml.Encoder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.xml.namespace.QName;
-import javax.xml.transform.TransformerException;
-import java.io.IOException;
-import java.util.UUID;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryCollection;
+import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.MultiLineString;
+import com.vividsolutions.jts.geom.MultiPoint;
+import com.vividsolutions.jts.geom.MultiPolygon;
+import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.Polygon;
+import com.vividsolutions.jts.io.ParseException;
+import com.vividsolutions.jts.io.WKTReader;
 
 public final class WktToGmlTransformUtil {
 
@@ -174,6 +184,7 @@ public final class WktToGmlTransformUtil {
         Geometry geometry = reader.read(wkt);
 
         QName qName;
+        Configuration config = new org.geotools.gml3.v3_2.GMLConfiguration();
         if (geometry instanceof Point) {
             qName = org.geotools.gml3.v3_2.GML.Point;
         } else if (geometry instanceof MultiPoint) {
@@ -187,12 +198,12 @@ public final class WktToGmlTransformUtil {
         } else if (geometry instanceof MultiPolygon) {
             qName = org.geotools.gml3.v3_2.GML.MultiSurface;
         } else if (geometry instanceof GeometryCollection) {
-            qName = org.geotools.gml3.v3_2.GML.MultiGeometry;
+            qName = org.geotools.gml3.GML.MultiGeometry;
+            config = new GMLConfiguration();
         } else {
             throw new IllegalArgumentException("Geometry type is currently not supported: " + geometry.getGeometryType());
         }
 
-        org.geotools.gml3.v3_2.GMLConfiguration config = new org.geotools.gml3.v3_2.GMLConfiguration();
         Encoder encoder = new Encoder(config);
         encoder.setOmitXMLDeclaration(true);
 

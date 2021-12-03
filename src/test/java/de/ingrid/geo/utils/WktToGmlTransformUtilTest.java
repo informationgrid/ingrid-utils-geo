@@ -38,6 +38,16 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals("30.0 10.0", pos.getTextContent());
 	}
 
+    public void testPointElement() throws ParseException, IOException, TransformerException, SAXException {
+        String wkt = "POINT(30 10)";
+        Element gml = WktToGmlTransformUtil.wktToGml3AsElement(wkt);
+        assertEquals("gml:Point", gml.getTagName());
+
+        Element pos = getFirstElementChild(gml);
+        assertEquals("gml:pos", pos.getTagName());
+        assertEquals("30.0 10.0", pos.getTextContent());
+    }
+
 	public void testMultiPointString() throws ParseException, IOException {
 		String wkt = "MULTIPOINT ((10 40), (40 30), (20 20), (30 10))";
 		String gml = WktToGmlTransformUtil.wktToGml3AsString(wkt);
@@ -518,5 +528,34 @@ public class WktToGmlTransformUtilTest extends TestCase {
         assertEquals(expected, actual);
     }
 
+    public void testMultiGeometryString3_2() throws ParseException, IOException {
+        String wkt = "GEOMETRYCOLLECTION (POINT (40 10), LINESTRING (10 10, 20 20, 10 40), POLYGON ((40 40, 20 45, 45 30, 40 40)))";
+        String gml = WktToGmlTransformUtil.wktToGml3_2AsString(wkt);
+
+        String actual = deleteIdAttributes(gml);
+        String expected =
+                "<gml:MultiGeometry>" +
+                  "<gml:geometryMember>" +
+                    "<gml:Point srsDimension=\"2\">" +
+                      "<gml:pos>40.0 10.0</gml:pos>" +
+                    "</gml:Point>" +
+                  "</gml:geometryMember>" +
+                  "<gml:geometryMember>" +
+                    "<gml:LineString srsDimension=\"2\">" +
+                      "<gml:posList>10.0 10.0 20.0 20.0 10.0 40.0</gml:posList>" +
+                    "</gml:LineString>" +
+                  "</gml:geometryMember>" +
+                  "<gml:geometryMember>" +
+                    "<gml:Polygon srsDimension=\"2\">" +
+                      "<gml:exterior>" +
+                        "<gml:LinearRing srsDimension=\"2\">" +
+                          "<gml:posList>40.0 40.0 20.0 45.0 45.0 30.0 40.0 40.0</gml:posList>" +
+                        "</gml:LinearRing>" +
+                      "</gml:exterior>" +
+                    "</gml:Polygon>" +
+                  "</gml:geometryMember>" +
+                "</gml:MultiGeometry>";
+        assertEquals(expected, actual);
+    }
 }
 
