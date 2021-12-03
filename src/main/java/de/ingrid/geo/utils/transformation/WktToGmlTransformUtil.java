@@ -76,18 +76,9 @@ public final class WktToGmlTransformUtil {
 	}
 
     public static Element wktToGml3AsElement(String wkt) throws ParseException, IOException, TransformerException, SAXException    {
-        Document doc = wktToGml3(wkt, Document.class);
+        Document doc = wktToGml3AsDom(wkt);
         if(doc != null) {
-            String[] tagNames = {"Point", "MultiPoint", "LineString", "MultiLineString", "Polygon", "MultiPolygon", "MultiGeometry"};
-            for(String tagName: tagNames) {
-                NodeList tags = doc.getElementsByTagName("gml:" + tagName);
-                for(int i=0; i<tags.getLength(); i++) {
-                    Element element = (Element) tags.item(i);
-                    element.setAttribute("gml:id", tagName + "_ID_" + UUID.randomUUID());
-                }
-            }
             Element elem = doc.getDocumentElement();
-            elem.removeAttribute("xmlns:gml");
             return elem;
         } else {
             throw new IllegalArgumentException("Cannot convert: " + wkt);
@@ -155,7 +146,7 @@ public final class WktToGmlTransformUtil {
 
     public static Document wktToGml3_2AsDom(String wkt) throws ParseException, IOException, TransformerException, SAXException    {
         Document doc = wktToGml3_2(wkt, Document.class);
-        String[] tagNames = {"Point", "MultiPoint", "LineString", "MultiLineString", "Polygon", "MultiPolygon", "MultiGeometry"};
+        String[] tagNames = {"Point", "MultiPoint", "LineString", "MultiCurve", "Polygon", "MultiSurface", "MultiGeometry"};
         for(String tagName: tagNames) {
             NodeList tags = doc.getElementsByTagName("gml:" + tagName);
             for(int i=0; i<tags.getLength(); i++) {
@@ -168,18 +159,9 @@ public final class WktToGmlTransformUtil {
     }
 
     public static Element wktToGml3_2AsElement(String wkt) throws ParseException, IOException, TransformerException, SAXException    {
-        Document doc = wktToGml3_2(wkt, Document.class);
+        Document doc = wktToGml3_2AsDom(wkt);
         if(doc != null) {
-            String[] tagNames = {"Point", "MultiPoint", "LineString", "MultiLineString", "Polygon", "MultiPolygon", "MultiGeometry"};
-            for(String tagName: tagNames) {
-                NodeList tags = doc.getElementsByTagName("gml:" + tagName);
-                for(int i=0; i<tags.getLength(); i++) {
-                    Element element = (Element) tags.item(i);
-                    element.setAttribute("gml:id", tagName + "_ID_" + UUID.randomUUID());
-                }
-            }
             Element elem = doc.getDocumentElement();
-            elem.removeAttribute("xmlns:gml");
             return elem;
         } else {
             throw new IllegalArgumentException("Cannot convert: " + wkt);
