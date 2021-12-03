@@ -63,7 +63,7 @@ public final class WktToGmlTransformUtil {
 	 */
 	public static Document wktToGml3AsDom(String wkt) throws ParseException, IOException, TransformerException, SAXException	{
 		Document doc = wktToGml3(wkt, Document.class);
-		String[] tagNames = {"Point", "MultiPoint", "LineString", "MultiCurve", "Polygon", "MultiSurface", "MultiGeometry"};
+		String[] tagNames = {"Point", "MultiPoint", "LineString", "MultiLineString", "Polygon", "MultiPolygon", "MultiGeometry"};
 		for(String tagName: tagNames) {
 			NodeList tags = doc.getElementsByTagName("gml:" + tagName);
 			for(int i=0; i<tags.getLength(); i++) {
@@ -107,11 +107,11 @@ public final class WktToGmlTransformUtil {
 		} else if (geometry instanceof LineString) {
 			qName = GML.LineString;
 		} else if (geometry instanceof MultiLineString) {
-			qName = GML.MultiCurve;
+			qName = GML.MultiLineString;
 		} else if (geometry instanceof Polygon) {
 			qName = GML.Polygon;
 		} else if (geometry instanceof MultiPolygon) {
-			qName = GML.MultiSurface;
+			qName = GML.MultiPolygon;
 		} else if (geometry instanceof GeometryCollection) {
 			qName = GML.MultiGeometry;
 		} else {

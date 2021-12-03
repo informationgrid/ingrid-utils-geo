@@ -135,18 +135,18 @@ public class WktToGmlTransformUtilTest extends TestCase {
 
 		String actual = deleteIdAttributes(gml);
 		String expected =
-				"<gml:MultiCurve>" +
-				  "<gml:curveMember>" +
+				"<gml:MultiLineString>" +
+				  "<gml:lineStringMember>" +
 				    "<gml:LineString srsDimension=\"2\">" +
 				      "<gml:posList>10.0 10.0 20.0 20.0 10.0 40.0</gml:posList>" +
 				    "</gml:LineString>" +
-				  "</gml:curveMember>" +
-				  "<gml:curveMember>" +
+				  "</gml:lineStringMember>" +
+				  "<gml:lineStringMember>" +
 				    "<gml:LineString srsDimension=\"2\">" +
 				      "<gml:posList>40.0 40.0 30.0 30.0 40.0 20.0 30.0 10.0</gml:posList>" +
 				    "</gml:LineString>" +
-				  "</gml:curveMember>" +
-				"</gml:MultiCurve>";
+				  "</gml:lineStringMember>" +
+				"</gml:MultiLineString>";
 		assertEquals(expected, actual);
 	}
 
@@ -155,10 +155,10 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		Document gml = WktToGmlTransformUtil.wktToGml3AsDom(wkt);
 
 		Element root = gml.getDocumentElement();
-		assertEquals("gml:MultiCurve", root.getTagName());
+		assertEquals("gml:MultiLineString", root.getTagName());
 
 		Element member = getFirstElementChild(root);
-		assertEquals("gml:curveMember", member.getTagName());
+		assertEquals("gml:lineStringMember", member.getTagName());
 		Element lineString = getFirstElementChild(member);
 		assertEquals("gml:LineString", lineString.getTagName());
 		Element posList = getFirstElementChild(lineString);
@@ -166,7 +166,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals("10.0 10.0 20.0 20.0 10.0 40.0", posList.getTextContent());
 
 		member = getNextElementSibling(member);
-		assertEquals("gml:curveMember", member.getTagName());
+		assertEquals("gml:lineStringMember", member.getTagName());
 		lineString = getFirstElementChild(member);
 		assertEquals("gml:LineString", lineString.getTagName());
 		posList = getFirstElementChild(lineString);
@@ -225,8 +225,8 @@ public class WktToGmlTransformUtilTest extends TestCase {
 
 		String actual = deleteIdAttributes(gml);
 		String expected =
-				"<gml:MultiSurface>" +
-				  "<gml:surfaceMember>" +
+				"<gml:MultiPolygon>" +
+				  "<gml:polygonMember>" +
 				    "<gml:Polygon srsDimension=\"2\">" +
 				      "<gml:exterior>" +
 				        "<gml:LinearRing srsDimension=\"2\">" +
@@ -234,8 +234,8 @@ public class WktToGmlTransformUtilTest extends TestCase {
 				        "</gml:LinearRing>" +
 				      "</gml:exterior>" +
 				    "</gml:Polygon>" +
-				  "</gml:surfaceMember>" +
-				  "<gml:surfaceMember>" +
+				  "</gml:polygonMember>" +
+				  "<gml:polygonMember>" +
 				    "<gml:Polygon srsDimension=\"2\">" +
 				      "<gml:exterior>" +
 				        "<gml:LinearRing srsDimension=\"2\">" +
@@ -248,8 +248,8 @@ public class WktToGmlTransformUtilTest extends TestCase {
 				        "</gml:LinearRing>" +
 				      "</gml:interior>" +
 				    "</gml:Polygon>" +
-				  "</gml:surfaceMember>" +
-				"</gml:MultiSurface>";
+				  "</gml:polygonMember>" +
+				"</gml:MultiPolygon>";
 		assertEquals(expected, actual);
 	}
 
@@ -258,10 +258,10 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		Document gml = WktToGmlTransformUtil.wktToGml3AsDom(wkt);
 
 		Element root = gml.getDocumentElement();
-		assertEquals("gml:MultiSurface", root.getTagName());
+		assertEquals("gml:MultiPolygon", root.getTagName());
 
 		Element member = getFirstElementChild(root);
-		assertEquals("gml:surfaceMember", member.getTagName());
+		assertEquals("gml:polygonMember", member.getTagName());
 		Element polygon = getFirstElementChild(member);
 		assertEquals("gml:Polygon", polygon.getTagName());
 		Element exterior = getFirstElementChild(polygon);
@@ -273,7 +273,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals("40.0 40.0 20.0 45.0 45.0 30.0 40.0 40.0", posList.getTextContent());
 
 		member = getNextElementSibling(member);
-		assertEquals("gml:surfaceMember", member.getTagName());
+		assertEquals("gml:polygonMember", member.getTagName());
 		polygon = getFirstElementChild(member);
 		assertEquals("gml:Polygon", polygon.getTagName());
 		exterior = getFirstElementChild(polygon);
