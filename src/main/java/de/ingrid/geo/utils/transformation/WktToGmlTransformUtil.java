@@ -75,6 +75,25 @@ public final class WktToGmlTransformUtil {
 		return doc;
 	}
 
+    public static Element wktToGml3AsElement(String wkt) throws ParseException, IOException, TransformerException, SAXException    {
+        Document doc = wktToGml3(wkt, Document.class);
+        if(doc != null) {
+            String[] tagNames = {"Point", "MultiPoint", "LineString", "MultiLineString", "Polygon", "MultiPolygon", "MultiGeometry"};
+            for(String tagName: tagNames) {
+                NodeList tags = doc.getElementsByTagName("gml:" + tagName);
+                for(int i=0; i<tags.getLength(); i++) {
+                    Element element = (Element) tags.item(i);
+                    element.setAttribute("gml:id", tagName + "_ID_" + UUID.randomUUID());
+                }
+            }
+            Element elem = doc.getDocumentElement();
+            elem.removeAttribute("xmlns:gml");
+            return elem;
+        } else {
+            throw new IllegalArgumentException("Cannot convert: " + wkt);
+        }
+    }
+
 	private static <T> T wktToGml3(String wkt, Class<T> klasse) throws ParseException, IOException, TransformerException, SAXException {
 		// Adapted from https://gis.stackexchange.com/a/244875
 		WKTReader reader = new WKTReader();
@@ -146,6 +165,25 @@ public final class WktToGmlTransformUtil {
         }
 
         return doc;
+    }
+
+    public static Element wktToGml3_2AsElement(String wkt) throws ParseException, IOException, TransformerException, SAXException    {
+        Document doc = wktToGml3_2(wkt, Document.class);
+        if(doc != null) {
+            String[] tagNames = {"Point", "MultiPoint", "LineString", "MultiLineString", "Polygon", "MultiPolygon", "MultiGeometry"};
+            for(String tagName: tagNames) {
+                NodeList tags = doc.getElementsByTagName("gml:" + tagName);
+                for(int i=0; i<tags.getLength(); i++) {
+                    Element element = (Element) tags.item(i);
+                    element.setAttribute("gml:id", tagName + "_ID_" + UUID.randomUUID());
+                }
+            }
+            Element elem = doc.getDocumentElement();
+            elem.removeAttribute("xmlns:gml");
+            return elem;
+        } else {
+            throw new IllegalArgumentException("Cannot convert: " + wkt);
+        }
     }
 
     private static <T> T wktToGml3_2(String wkt, Class<T> klasse) throws ParseException, IOException, TransformerException, SAXException {
