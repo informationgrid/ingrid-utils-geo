@@ -1,10 +1,11 @@
 package de.ingrid.geo.utils;
 
-import com.vividsolutions.jts.io.ParseException;
+import java.io.IOException;
+
+import org.locationtech.jts.io.ParseException;
+
 import de.ingrid.geo.utils.transformation.WktToGeoJsonTransformUtil;
 import junit.framework.TestCase;
-
-import java.io.IOException;
 
 public class WktToGeoJsonTransformUtilTest extends TestCase {
 

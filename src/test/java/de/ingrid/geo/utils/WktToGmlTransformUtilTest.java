@@ -1,16 +1,18 @@
 package de.ingrid.geo.utils;
 
-import com.vividsolutions.jts.io.ParseException;
-import de.ingrid.geo.utils.transformation.WktToGmlTransformUtil;
-import junit.framework.TestCase;
+import java.io.IOException;
+
+import javax.xml.transform.TransformerException;
+
+import org.locationtech.jts.io.ParseException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.TransformerException;
-import java.io.IOException;
+import de.ingrid.geo.utils.transformation.WktToGmlTransformUtil;
+import junit.framework.TestCase;
 
 public class WktToGmlTransformUtilTest extends TestCase {
 
@@ -21,7 +23,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		String actual = deleteIdAttributes(gml);
 		String expected =
 				"<gml:Point>" +
-				  "<gml:pos>30.0 10.0</gml:pos>" +
+				  "<gml:pos>30 10</gml:pos>" +
 				"</gml:Point>";
 		assertEquals(expected, actual);
 	}
@@ -35,7 +37,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
 
 		Element pos = getFirstElementChild(root);
 		assertEquals("gml:pos", pos.getTagName());
-		assertEquals("30.0 10.0", pos.getTextContent());
+		assertEquals("30 10", pos.getTextContent());
 	}
 
     public void testPointElement() throws ParseException, IOException, TransformerException, SAXException {
@@ -45,7 +47,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
 
         Element pos = getFirstElementChild(gml);
         assertEquals("gml:pos", pos.getTagName());
-        assertEquals("30.0 10.0", pos.getTextContent());
+        assertEquals("30 10", pos.getTextContent());
     }
 
 	public void testMultiPointString() throws ParseException, IOException {
@@ -57,22 +59,22 @@ public class WktToGmlTransformUtilTest extends TestCase {
 				"<gml:MultiPoint>" +
 				  "<gml:pointMember>" +
 				    "<gml:Point srsDimension=\"2\">" +
-				      "<gml:pos>10.0 40.0</gml:pos>" +
+				      "<gml:pos>10 40</gml:pos>" +
 				    "</gml:Point>" +
 				  "</gml:pointMember>" +
 				  "<gml:pointMember>" +
 				    "<gml:Point srsDimension=\"2\">" +
-				      "<gml:pos>40.0 30.0</gml:pos>" +
+				      "<gml:pos>40 30</gml:pos>" +
 				    "</gml:Point>" +
 				  "</gml:pointMember>" +
 				  "<gml:pointMember>" +
 				    "<gml:Point srsDimension=\"2\">" +
-				      "<gml:pos>20.0 20.0</gml:pos>" +
+				      "<gml:pos>20 20</gml:pos>" +
 				    "</gml:Point>" +
 				  "</gml:pointMember>" +
 				  "<gml:pointMember>" +
 				    "<gml:Point srsDimension=\"2\">" +
-				      "<gml:pos>30.0 10.0</gml:pos>" +
+				      "<gml:pos>30 10</gml:pos>" +
 				    "</gml:Point>" +
 				  "</gml:pointMember>" +
 				"</gml:MultiPoint>";
@@ -91,28 +93,28 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		Element point = getFirstElementChild(pointMember);
 		assertEquals("gml:Point", point.getTagName());
 		Element pos = getFirstElementChild(point);
-		assertEquals("10.0 40.0", pos.getTextContent());
+		assertEquals("10 40", pos.getTextContent());
 
 		pointMember = getNextElementSibling(pointMember);
 		assertEquals("gml:pointMember", pointMember.getTagName());
 		point = getFirstElementChild(pointMember);
 		assertEquals("gml:Point", point.getTagName());
 		pos = getFirstElementChild(point);
-		assertEquals("40.0 30.0", pos.getTextContent());
+		assertEquals("40 30", pos.getTextContent());
 
 		pointMember = getNextElementSibling(pointMember);
 		assertEquals("gml:pointMember", pointMember.getTagName());
 		point = getFirstElementChild(pointMember);
 		assertEquals("gml:Point", point.getTagName());
 		pos = getFirstElementChild(point);
-		assertEquals("20.0 20.0", pos.getTextContent());
+		assertEquals("20 20", pos.getTextContent());
 
 		pointMember = getNextElementSibling(pointMember);
 		assertEquals("gml:pointMember", pointMember.getTagName());
 		point = getFirstElementChild(pointMember);
 		assertEquals("gml:Point", point.getTagName());
 		pos = getFirstElementChild(point);
-		assertEquals("30.0 10.0", pos.getTextContent());
+		assertEquals("30 10", pos.getTextContent());
 	}
 
 	public void testLinestringString() throws ParseException, IOException {
@@ -122,7 +124,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		String actual = deleteIdAttributes(gml);
 		String expected =
 				"<gml:LineString>" +
-				  "<gml:posList>30.0 10.0 10.0 30.0 40.0 40.0</gml:posList>" +
+				  "<gml:posList>30 10 10 30 40 40</gml:posList>" +
 				"</gml:LineString>";
 		assertEquals(expected, actual);
 	}
@@ -136,7 +138,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
 
 		Element posList = getFirstElementChild(root);
 		assertEquals("gml:posList", posList.getTagName());
-		assertEquals("30.0 10.0 10.0 30.0 40.0 40.0", posList.getTextContent());
+		assertEquals("30 10 10 30 40 40", posList.getTextContent());
 	}
 
 	public void testMultiLinestringString() throws ParseException, IOException {
@@ -148,12 +150,12 @@ public class WktToGmlTransformUtilTest extends TestCase {
 				"<gml:MultiLineString>" +
 				  "<gml:lineStringMember>" +
 				    "<gml:LineString srsDimension=\"2\">" +
-				      "<gml:posList>10.0 10.0 20.0 20.0 10.0 40.0</gml:posList>" +
+				      "<gml:posList>10 10 20 20 10 40</gml:posList>" +
 				    "</gml:LineString>" +
 				  "</gml:lineStringMember>" +
 				  "<gml:lineStringMember>" +
 				    "<gml:LineString srsDimension=\"2\">" +
-				      "<gml:posList>40.0 40.0 30.0 30.0 40.0 20.0 30.0 10.0</gml:posList>" +
+				      "<gml:posList>40 40 30 30 40 20 30 10</gml:posList>" +
 				    "</gml:LineString>" +
 				  "</gml:lineStringMember>" +
 				"</gml:MultiLineString>";
@@ -173,7 +175,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals("gml:LineString", lineString.getTagName());
 		Element posList = getFirstElementChild(lineString);
 		assertEquals("gml:posList", posList.getTagName());
-		assertEquals("10.0 10.0 20.0 20.0 10.0 40.0", posList.getTextContent());
+		assertEquals("10 10 20 20 10 40", posList.getTextContent());
 
 		member = getNextElementSibling(member);
 		assertEquals("gml:lineStringMember", member.getTagName());
@@ -181,7 +183,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals("gml:LineString", lineString.getTagName());
 		posList = getFirstElementChild(lineString);
 		assertEquals("gml:posList", posList.getTagName());
-		assertEquals("40.0 40.0 30.0 30.0 40.0 20.0 30.0 10.0", posList.getTextContent());
+		assertEquals("40 40 30 30 40 20 30 10", posList.getTextContent());
 	}
 
 	public void testPolygonString() throws ParseException, IOException {
@@ -193,12 +195,12 @@ public class WktToGmlTransformUtilTest extends TestCase {
 				"<gml:Polygon>" +
 				  "<gml:exterior>" +
 				    "<gml:LinearRing srsDimension=\"2\">" +
-				      "<gml:posList>35.0 10.0 45.0 45.0 15.0 40.0 10.0 20.0 35.0 10.0</gml:posList>" +
+				      "<gml:posList>35 10 45 45 15 40 10 20 35 10</gml:posList>" +
 				    "</gml:LinearRing>" +
 				  "</gml:exterior>" +
 				  "<gml:interior>" +
 				    "<gml:LinearRing srsDimension=\"2\">" +
-				      "<gml:posList>20.0 30.0 35.0 35.0 30.0 20.0 20.0 30.0</gml:posList>" +
+				      "<gml:posList>20 30 35 35 30 20 20 30</gml:posList>" +
 				    "</gml:LinearRing>" +
 				  "</gml:interior>" +
 				"</gml:Polygon>";
@@ -218,7 +220,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals("gml:LinearRing", linearRing.getTagName());
 		Element posList = getFirstElementChild(linearRing);
 		assertEquals("gml:posList", posList.getTagName());
-		assertEquals("35.0 10.0 45.0 45.0 15.0 40.0 10.0 20.0 35.0 10.0", posList.getTextContent());
+		assertEquals("35 10 45 45 15 40 10 20 35 10", posList.getTextContent());
 
 		Element interior = getNextElementSibling(exterior);
 		assertEquals("gml:interior", interior.getTagName());
@@ -226,7 +228,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals("gml:LinearRing", linearRing.getTagName());
 		posList = getFirstElementChild(linearRing);
 		assertEquals("gml:posList", posList.getTagName());
-		assertEquals("20.0 30.0 35.0 35.0 30.0 20.0 20.0 30.0", posList.getTextContent());
+		assertEquals("20 30 35 35 30 20 20 30", posList.getTextContent());
 	}
 
 	public void testMultiPolygonString() throws ParseException, IOException {
@@ -240,7 +242,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
 				    "<gml:Polygon srsDimension=\"2\">" +
 				      "<gml:exterior>" +
 				        "<gml:LinearRing srsDimension=\"2\">" +
-				          "<gml:posList>40.0 40.0 20.0 45.0 45.0 30.0 40.0 40.0</gml:posList>" +
+				          "<gml:posList>40 40 20 45 45 30 40 40</gml:posList>" +
 				        "</gml:LinearRing>" +
 				      "</gml:exterior>" +
 				    "</gml:Polygon>" +
@@ -249,12 +251,12 @@ public class WktToGmlTransformUtilTest extends TestCase {
 				    "<gml:Polygon srsDimension=\"2\">" +
 				      "<gml:exterior>" +
 				        "<gml:LinearRing srsDimension=\"2\">" +
-				          "<gml:posList>20.0 35.0 10.0 30.0 10.0 10.0 30.0 5.0 45.0 20.0 20.0 35.0</gml:posList>" +
+				          "<gml:posList>20 35 10 30 10 10 30 5 45 20 20 35</gml:posList>" +
 				        "</gml:LinearRing>" +
 				      "</gml:exterior>" +
 				      "<gml:interior>" +
 				        "<gml:LinearRing srsDimension=\"2\">" +
-				          "<gml:posList>30.0 20.0 20.0 15.0 20.0 25.0 30.0 20.0</gml:posList>" +
+				          "<gml:posList>30 20 20 15 20 25 30 20</gml:posList>" +
 				        "</gml:LinearRing>" +
 				      "</gml:interior>" +
 				    "</gml:Polygon>" +
@@ -280,7 +282,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals("gml:LinearRing", linearRing.getTagName());
 		Element posList = getFirstElementChild(linearRing);
 		assertEquals("gml:posList", posList.getTagName());
-		assertEquals("40.0 40.0 20.0 45.0 45.0 30.0 40.0 40.0", posList.getTextContent());
+		assertEquals("40 40 20 45 45 30 40 40", posList.getTextContent());
 
 		member = getNextElementSibling(member);
 		assertEquals("gml:polygonMember", member.getTagName());
@@ -292,14 +294,14 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals("gml:LinearRing", linearRing.getTagName());
 		posList = getFirstElementChild(linearRing);
 		assertEquals("gml:posList", posList.getTagName());
-		assertEquals("20.0 35.0 10.0 30.0 10.0 10.0 30.0 5.0 45.0 20.0 20.0 35.0", posList.getTextContent());
+		assertEquals("20 35 10 30 10 10 30 5 45 20 20 35", posList.getTextContent());
 		Element interior = getNextElementSibling(exterior);
 		assertEquals("gml:interior", interior.getTagName());
 		linearRing = getFirstElementChild(interior);
 		assertEquals("gml:LinearRing", linearRing.getTagName());
 		posList = getFirstElementChild(linearRing);
 		assertEquals("gml:posList", posList.getTagName());
-		assertEquals("30.0 20.0 20.0 15.0 20.0 25.0 30.0 20.0", posList.getTextContent());
+		assertEquals("30 20 20 15 20 25 30 20", posList.getTextContent());
 	}
 
 	public void testMultiGeometryString() throws ParseException, IOException {
@@ -311,19 +313,19 @@ public class WktToGmlTransformUtilTest extends TestCase {
 				"<gml:MultiGeometry>" +
 				  "<gml:geometryMember>" +
 				    "<gml:Point srsDimension=\"2\">" +
-				      "<gml:pos>40.0 10.0</gml:pos>" +
+				      "<gml:pos>40 10</gml:pos>" +
 				    "</gml:Point>" +
 				  "</gml:geometryMember>" +
 				  "<gml:geometryMember>" +
 				    "<gml:LineString srsDimension=\"2\">" +
-				      "<gml:posList>10.0 10.0 20.0 20.0 10.0 40.0</gml:posList>" +
+				      "<gml:posList>10 10 20 20 10 40</gml:posList>" +
 				    "</gml:LineString>" +
 				  "</gml:geometryMember>" +
 				  "<gml:geometryMember>" +
 				    "<gml:Polygon srsDimension=\"2\">" +
 				      "<gml:exterior>" +
 				        "<gml:LinearRing srsDimension=\"2\">" +
-				          "<gml:posList>40.0 40.0 20.0 45.0 45.0 30.0 40.0 40.0</gml:posList>" +
+				          "<gml:posList>40 40 20 45 45 30 40 40</gml:posList>" +
 				        "</gml:LinearRing>" +
 				      "</gml:exterior>" +
 				    "</gml:Polygon>" +
@@ -345,7 +347,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals("gml:Point", point.getTagName());
 		Element pos = getFirstElementChild(point);
 		assertEquals("gml:pos", pos.getTagName());
-		assertEquals("40.0 10.0", pos.getTextContent());
+		assertEquals("40 10", pos.getTextContent());
 
 		member = getNextElementSibling(member);
 		assertEquals("gml:geometryMember", member.getTagName());
@@ -353,7 +355,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals("gml:LineString", lineString.getTagName());
 		Element posList = getFirstElementChild(lineString);
 		assertEquals("gml:posList", posList.getTagName());
-		assertEquals("10.0 10.0 20.0 20.0 10.0 40.0", posList.getTextContent());
+		assertEquals("10 10 20 20 10 40", posList.getTextContent());
 
 		member = getNextElementSibling(member);
 		assertEquals("gml:geometryMember", member.getTagName());
@@ -365,7 +367,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals("gml:LinearRing", linearRing.getTagName());
 		posList = getFirstElementChild(linearRing);
 		assertEquals("gml:posList", posList.getTagName());
-		assertEquals("40.0 40.0 20.0 45.0 45.0 30.0 40.0 40.0", posList.getTextContent());
+		assertEquals("40 40 20 45 45 30 40 40", posList.getTextContent());
 	}
 
 	private String deleteIdAttributes(String gml) {
@@ -404,7 +406,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
         String actual = deleteIdAttributes(gml);
         String expected =
                 "<gml:Point>" +
-                  "<gml:pos>30.0 10.0</gml:pos>" +
+                  "<gml:pos>30 10</gml:pos>" +
                 "</gml:Point>";
         assertEquals(expected, actual);
     }
@@ -418,22 +420,22 @@ public class WktToGmlTransformUtilTest extends TestCase {
                 "<gml:MultiPoint>" +
                   "<gml:pointMember>" +
                     "<gml:Point srsDimension=\"2\">" +
-                      "<gml:pos>10.0 40.0</gml:pos>" +
+                      "<gml:pos>10 40</gml:pos>" +
                     "</gml:Point>" +
                   "</gml:pointMember>" +
                   "<gml:pointMember>" +
                     "<gml:Point srsDimension=\"2\">" +
-                      "<gml:pos>40.0 30.0</gml:pos>" +
+                      "<gml:pos>40 30</gml:pos>" +
                     "</gml:Point>" +
                   "</gml:pointMember>" +
                   "<gml:pointMember>" +
                     "<gml:Point srsDimension=\"2\">" +
-                      "<gml:pos>20.0 20.0</gml:pos>" +
+                      "<gml:pos>20 20</gml:pos>" +
                     "</gml:Point>" +
                   "</gml:pointMember>" +
                   "<gml:pointMember>" +
                     "<gml:Point srsDimension=\"2\">" +
-                      "<gml:pos>30.0 10.0</gml:pos>" +
+                      "<gml:pos>30 10</gml:pos>" +
                     "</gml:Point>" +
                   "</gml:pointMember>" +
                 "</gml:MultiPoint>";
@@ -447,7 +449,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
         String actual = deleteIdAttributes(gml);
         String expected =
                 "<gml:LineString>" +
-                  "<gml:posList>30.0 10.0 10.0 30.0 40.0 40.0</gml:posList>" +
+                  "<gml:posList>30 10 10 30 40 40</gml:posList>" +
                 "</gml:LineString>";
         assertEquals(expected, actual);
     }
@@ -461,12 +463,12 @@ public class WktToGmlTransformUtilTest extends TestCase {
                 "<gml:MultiCurve>" +
                   "<gml:curveMember>" +
                     "<gml:LineString srsDimension=\"2\">" +
-                      "<gml:posList>10.0 10.0 20.0 20.0 10.0 40.0</gml:posList>" +
+                      "<gml:posList>10 10 20 20 10 40</gml:posList>" +
                     "</gml:LineString>" +
                   "</gml:curveMember>" +
                   "<gml:curveMember>" +
                     "<gml:LineString srsDimension=\"2\">" +
-                      "<gml:posList>40.0 40.0 30.0 30.0 40.0 20.0 30.0 10.0</gml:posList>" +
+                      "<gml:posList>40 40 30 30 40 20 30 10</gml:posList>" +
                     "</gml:LineString>" +
                   "</gml:curveMember>" +
                 "</gml:MultiCurve>";
@@ -482,12 +484,12 @@ public class WktToGmlTransformUtilTest extends TestCase {
                 "<gml:Polygon>" +
                   "<gml:exterior>" +
                     "<gml:LinearRing>" +
-                      "<gml:posList>35.0 10.0 45.0 45.0 15.0 40.0 10.0 20.0 35.0 10.0</gml:posList>" +
+                      "<gml:posList>35 10 45 45 15 40 10 20 35 10</gml:posList>" +
                     "</gml:LinearRing>" +
                   "</gml:exterior>" +
                   "<gml:interior>" +
                     "<gml:LinearRing>" +
-                      "<gml:posList>20.0 30.0 35.0 35.0 30.0 20.0 20.0 30.0</gml:posList>" +
+                      "<gml:posList>20 30 35 35 30 20 20 30</gml:posList>" +
                     "</gml:LinearRing>" +
                   "</gml:interior>" +
                 "</gml:Polygon>";
@@ -505,7 +507,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
                     "<gml:Polygon srsDimension=\"2\">" +
                       "<gml:exterior>" +
                         "<gml:LinearRing>" +
-                          "<gml:posList>40.0 40.0 20.0 45.0 45.0 30.0 40.0 40.0</gml:posList>" +
+                          "<gml:posList>40 40 20 45 45 30 40 40</gml:posList>" +
                         "</gml:LinearRing>" +
                       "</gml:exterior>" +
                     "</gml:Polygon>" +
@@ -514,12 +516,12 @@ public class WktToGmlTransformUtilTest extends TestCase {
                     "<gml:Polygon srsDimension=\"2\">" +
                       "<gml:exterior>" +
                         "<gml:LinearRing>" +
-                          "<gml:posList>20.0 35.0 10.0 30.0 10.0 10.0 30.0 5.0 45.0 20.0 20.0 35.0</gml:posList>" +
+                          "<gml:posList>20 35 10 30 10 10 30 5 45 20 20 35</gml:posList>" +
                         "</gml:LinearRing>" +
                       "</gml:exterior>" +
                       "<gml:interior>" +
                         "<gml:LinearRing>" +
-                          "<gml:posList>30.0 20.0 20.0 15.0 20.0 25.0 30.0 20.0</gml:posList>" +
+                          "<gml:posList>30 20 20 15 20 25 30 20</gml:posList>" +
                         "</gml:LinearRing>" +
                       "</gml:interior>" +
                     "</gml:Polygon>" +
@@ -534,28 +536,36 @@ public class WktToGmlTransformUtilTest extends TestCase {
 
         String actual = deleteIdAttributes(gml);
         String expected =
-                "<gml:MultiGeometry>" +
-                  "<gml:geometryMember>" +
-                    "<gml:Point srsDimension=\"2\">" +
-                      "<gml:pos>40.0 10.0</gml:pos>" +
-                    "</gml:Point>" +
-                  "</gml:geometryMember>" +
-                  "<gml:geometryMember>" +
-                    "<gml:LineString srsDimension=\"2\">" +
-                      "<gml:posList>10.0 10.0 20.0 20.0 10.0 40.0</gml:posList>" +
-                    "</gml:LineString>" +
-                  "</gml:geometryMember>" +
-                  "<gml:geometryMember>" +
-                    "<gml:Polygon srsDimension=\"2\">" +
-                      "<gml:exterior>" +
-                        "<gml:LinearRing srsDimension=\"2\">" +
-                          "<gml:posList>40.0 40.0 20.0 45.0 45.0 30.0 40.0 40.0</gml:posList>" +
-                        "</gml:LinearRing>" +
-                      "</gml:exterior>" +
-                    "</gml:Polygon>" +
-                  "</gml:geometryMember>" +
+                "<gml:MultiGeometry>" + 
+                    "<gml:geometryMember>" + 
+                        "<gml:Point srsDimension=\"2\">" + 
+                            "<gml:pos>40 10</gml:pos>" + 
+                        "</gml:Point>" + 
+                    "</gml:geometryMember>" + 
+                    "<gml:geometryMember>" + 
+                        "<gml:LineString srsDimension=\"2\">" + 
+                            "<gml:posList>10 10 20 20 10 40</gml:posList>" + 
+                        "</gml:LineString>" + 
+                    "</gml:geometryMember>" + 
+                    "<gml:geometryMember>" + 
+                        "<gml:Polygon srsDimension=\"2\">" + 
+                            "<gml:exterior>" + 
+                                "<gml:LinearRing>" + 
+                                    "<gml:posList>40 40 20 45 45 30 40 40</gml:posList>" + 
+                                "</gml:LinearRing>" + 
+                            "</gml:exterior>" + 
+                        "</gml:Polygon>" + 
+                    "</gml:geometryMember>" + 
                 "</gml:MultiGeometry>";
         assertEquals(expected, actual);
+    }
+    
+    public void testMultiGeometryDom3_2() throws ParseException, IOException, TransformerException, SAXException {
+        String wkt = "GEOMETRYCOLLECTION (POINT (40 10), LINESTRING (10 10, 20 20, 10 40), POLYGON ((40 40, 20 45, 45 30, 40 40)))";
+        Document gml = WktToGmlTransformUtil.wktToGml3_2AsDom(wkt);
+
+        Element root = gml.getDocumentElement();
+        assertEquals("gml:MultiGeometry", root.getTagName());
     }
 }
 

@@ -1,12 +1,11 @@
 package de.ingrid.geo.utils.transformation;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.io.ParseException;
-import com.vividsolutions.jts.io.WKTReader;
-import org.geotools.geojson.geom.GeometryJSON;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
+import org.geotools.geojson.geom.GeometryJSON;
+import org.geotools.geometry.jts.WKTReader2;
+import org.locationtech.jts.io.ParseException;
 
 public final class WktToGeoJsonTransformUtil {
 
@@ -24,8 +23,8 @@ public final class WktToGeoJsonTransformUtil {
 	 * @throws IOException if there is an error constructing the GeoJSON object
 	 */
 	public static String wktToKml(String wkt) throws ParseException, IOException {
-		WKTReader reader = new WKTReader();
-		Geometry geometry = reader.read(wkt);
+		WKTReader2 reader = new WKTReader2();
+		org.locationtech.jts.geom.Geometry geometry = reader.read(wkt);
 
 		GeometryJSON geometryJSON = new GeometryJSON();
 		ByteArrayOutputStream out = new ByteArrayOutputStream();

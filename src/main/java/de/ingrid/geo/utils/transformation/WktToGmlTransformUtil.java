@@ -6,25 +6,26 @@ import java.util.UUID;
 import javax.xml.namespace.QName;
 import javax.xml.transform.TransformerException;
 
+import org.geotools.geometry.jts.WKTReader2;
 import org.geotools.gml3.GML;
 import org.geotools.gml3.GMLConfiguration;
 import org.geotools.xml.Configuration;
 import org.geotools.xml.Encoder;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryCollection;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.MultiLineString;
+import org.locationtech.jts.geom.MultiPoint;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.io.ParseException;
+import org.locationtech.jts.io.WKTReader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryCollection;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.MultiLineString;
-import com.vividsolutions.jts.geom.MultiPoint;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.Polygon;
-import com.vividsolutions.jts.io.ParseException;
-import com.vividsolutions.jts.io.WKTReader;
 
 public final class WktToGmlTransformUtil {
 
@@ -180,11 +181,10 @@ public final class WktToGmlTransformUtil {
 
     private static <T> T wktToGml3_2(String wkt, Class<T> klasse) throws ParseException, IOException, TransformerException, SAXException {
         // Adapted from https://gis.stackexchange.com/a/244875
-        WKTReader reader = new WKTReader();
+        WKTReader2 reader = new WKTReader2();
         Geometry geometry = reader.read(wkt);
 
         QName qName;
-        Configuration config = new org.geotools.gml3.v3_2.GMLConfiguration();
         if (geometry instanceof Point) {
             qName = org.geotools.gml3.v3_2.GML.Point;
         } else if (geometry instanceof MultiPoint) {
@@ -198,12 +198,12 @@ public final class WktToGmlTransformUtil {
         } else if (geometry instanceof MultiPolygon) {
             qName = org.geotools.gml3.v3_2.GML.MultiSurface;
         } else if (geometry instanceof GeometryCollection) {
-            qName = org.geotools.gml3.GML.MultiGeometry;
-            config = new GMLConfiguration();
+            qName = org.geotools.gml3.v3_2.GML.MultiGeometry;
         } else {
             throw new IllegalArgumentException("Geometry type is currently not supported: " + geometry.getGeometryType());
         }
 
+        Configuration config = new org.geotools.gml3.v3_2.GMLConfiguration();
         Encoder encoder = new Encoder(config);
         encoder.setOmitXMLDeclaration(true);
 
