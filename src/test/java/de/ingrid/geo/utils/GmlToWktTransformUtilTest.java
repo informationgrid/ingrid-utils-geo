@@ -2,7 +2,6 @@ package de.ingrid.geo.utils;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.net.URISyntaxException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
