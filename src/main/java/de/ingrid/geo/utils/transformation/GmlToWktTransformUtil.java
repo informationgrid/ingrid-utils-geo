@@ -10,12 +10,14 @@ import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.geotools.xml.Parser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 
@@ -23,6 +25,43 @@ public final class GmlToWktTransformUtil {
 
     private GmlToWktTransformUtil() {
         // Disable instantiation
+    }
+
+    public static String gml3ToWktString(String input) throws SAXException, IOException, ParserConfigurationException {
+        String wkt = null;
+        if(input != null && !input.isEmpty()) {
+            org.geotools.gml3.GMLConfiguration config = new org.geotools.gml3.GMLConfiguration();
+            Parser parser = new Parser(config);
+            Object wktObj = parser.parse(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
+            wkt = wktObj.toString();
+        }
+        return wkt;
+    }
+
+    public static String gml3ToWktString(Node node) throws SAXException, IOException, ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException {
+        StringWriter writer = new StringWriter();
+        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+        transformer.transform(new DOMSource(node), new StreamResult(writer));
+        return GmlToWktTransformUtil.gml3ToWktString(writer.toString());
+    }
+
+    public static String gml3ToWktString(Document doc) throws IOException, SAXException, ParserConfigurationException, TransformerException {
+        String wkt = null;
+        if(doc != null) {
+            String namespace = "http://www.opengis.net/gml/3.2";
+            String prefix = "gml";
+            StringWriter buffer = new StringWriter();
+            Element elem = doc.getDocumentElement();
+            elem.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:" + prefix, namespace);
+            TransformerFactory transFactory = TransformerFactory.newInstance();
+            Transformer transformer = transFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            transformer.transform(new DOMSource(doc), new StreamResult(buffer));
+            String str = buffer.toString();
+            wkt = gml3ToWktString(str);
+        }
+        return wkt;
     }
 
     public static String gml3_2ToWktString(String input) throws SAXException, IOException, ParserConfigurationException {
@@ -34,6 +73,14 @@ public final class GmlToWktTransformUtil {
             wkt = wktObj.toString();
         }
         return wkt;
+    }
+
+    public static String gml3_2ToWktString(Node node) throws SAXException, IOException, ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException {
+        StringWriter writer = new StringWriter();
+        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+        transformer.transform(new DOMSource(node), new StreamResult(writer));
+        return GmlToWktTransformUtil.gml3_2ToWktString(writer.toString());
     }
 
     public static String gml3_2ToWktString(Document doc) throws IOException, SAXException, ParserConfigurationException, TransformerException {
