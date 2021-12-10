@@ -1,5 +1,6 @@
 package de.ingrid.geo.utils;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringReader;
 
@@ -7,9 +8,12 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactoryConfigurationError;
 
 import org.junit.Test;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -26,9 +30,25 @@ public class GmlToWktTransformUtilTest extends TestCase {
     }
 
     @Test
+    public void testGml3ToWktPointNode() throws SAXException, IOException, ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException {
+        String gml = "<gml:Point xmlns:gml=\"http://www.opengis.net/gml\" gml:id=\"Point_ID_7d8bfe21-328a-400e-b38d-549f2cc7cef8\" srsDimension=\"2\"><gml:pos>40 10</gml:pos></gml:Point>";
+        Node node = stringToNode(gml);
+        String wkt = GmlToWktTransformUtil.gml3ToWktString(node);
+        assertEquals("POINT (40 10)", wkt);
+    }
+
+    @Test
     public void testGml3_2ToWktPointString() throws SAXException, IOException, ParserConfigurationException {
         String gml = "<gml:Point xmlns:gml=\"http://www.opengis.net/gml/3.2\" gml:id=\"Point_ID_7d8bfe21-328a-400e-b38d-549f2cc7cef8\" srsDimension=\"2\"><gml:pos>40 10</gml:pos></gml:Point>";
         String wkt = GmlToWktTransformUtil.gml3_2ToWktString(gml);
+        assertEquals("POINT (40 10)", wkt);
+    }
+
+    @Test
+    public void testGml3_2ToWktPointNode() throws SAXException, IOException, ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException {
+        String gml = "<gml:Point xmlns:gml=\"http://www.opengis.net/gml/3.2\" gml:id=\"Point_ID_7d8bfe21-328a-400e-b38d-549f2cc7cef8\" srsDimension=\"2\"><gml:pos>40 10</gml:pos></gml:Point>";
+        Node node = stringToNode(gml);
+        String wkt = GmlToWktTransformUtil.gml3_2ToWktString(node);
         assertEquals("POINT (40 10)", wkt);
     }
 
@@ -172,6 +192,15 @@ public class GmlToWktTransformUtilTest extends TestCase {
 
         Document doc = db.parse(is);
         return doc;
+    }
+    
+    private Node stringToNode(String gml) throws SAXException, IOException, ParserConfigurationException {
+        Element node =  DocumentBuilderFactory
+            .newInstance()
+            .newDocumentBuilder()
+            .parse(new ByteArrayInputStream(gml.getBytes()))
+            .getDocumentElement();
+        return node;
     }
 }
 

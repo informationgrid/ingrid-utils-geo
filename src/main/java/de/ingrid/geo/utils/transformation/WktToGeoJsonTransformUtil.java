@@ -15,8 +15,6 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
-import de.ingrid.geo.utils.transformation.CoordTransformUtil.CoordType;
-
 public final class WktToGeoJsonTransformUtil {
 
 	private WktToGeoJsonTransformUtil() {
