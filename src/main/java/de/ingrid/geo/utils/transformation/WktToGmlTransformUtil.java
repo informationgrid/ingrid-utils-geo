@@ -27,7 +27,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 
-public final class WktToGmlTransformUtil {
+public class WktToGmlTransformUtil extends WktUtil {
 
 	private WktToGmlTransformUtil() {
 		// Disable instantiation
