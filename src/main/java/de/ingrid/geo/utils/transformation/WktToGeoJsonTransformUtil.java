@@ -34,7 +34,7 @@ public final class WktToGeoJsonTransformUtil extends WktUtil {
 		WKTReader2 reader = new WKTReader2();
 		org.locationtech.jts.geom.Geometry geometry = reader.read(wkt);
 
-		GeometryJSON geometryJSON = new GeometryJSON();
+		GeometryJSON geometryJSON = new GeometryJSON(10);
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		geometryJSON.write(geometry, out);
 		return out.toString();
@@ -52,7 +52,7 @@ public final class WktToGeoJsonTransformUtil extends WktUtil {
         CoordinateReferenceSystem targetCRS = CRS.parseWKT(CoordTransformUtil.getInstance().getWKTString(CoordTransformUtil.getInstance().getCoordTypeByEPSGCode(dstEpsg)));
 
         MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS, true);
-        GeometryJSON geometryJSON = new GeometryJSON();
+        GeometryJSON geometryJSON = new GeometryJSON(10);
         org.locationtech.jts.geom.Geometry targetGeometry = JTS.transform(geometry, transform);
         
         ByteArrayOutputStream out = new ByteArrayOutputStream();
