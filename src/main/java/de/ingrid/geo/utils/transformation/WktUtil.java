@@ -1,4 +1,4 @@
-/*
+/*-
  * **************************************************-
  * ingrid-utils-geo
  * ==================================================
@@ -20,23 +20,20 @@
  * limitations under the Licence.
  * **************************************************#
  */
-package de.ingrid.geo.utils;
+package de.ingrid.geo.utils.transformation;
 
-import de.ingrid.geo.utils.boundingbox.BoundingBoxUtils;
-import junit.framework.TestCase;
+import org.geotools.geometry.jts.WKTReader2;
+import org.locationtech.jts.io.ParseException;
 
-public class BoundingBoxTest extends TestCase {
+public class WktUtil {
 
-    double[] coord1 = { 8.22971710656067, 53.3197061130618};
-    double[] coord2 = { 10.5035995762954, 54.1281513544974};
-    double[] coord3 = { 6.92009188388852, 52.9777914432664}; 
-    double[] coord4 = { 9.07744917466639, 54.407905432226};
-
-    public void testDistance() {
-        assertNotNull(Utils.getDistance(coord1, coord2));
-        assertNotNull(BoundingBoxUtils.getInstance().getSquareBoxOfBoundingBox(coord1, coord2));
-        assertNotNull(BoundingBoxUtils.getInstance().getSquareBoxOfBoundingBox(coord3, coord4));
-        assertNotNull(BoundingBoxUtils.getInstance().getSquareBoxOfPoint( coord1[0], coord1[1], 100));
+    public static boolean isValidWkt(String wkt) {
+        WKTReader2 reader = new WKTReader2();
+        try {
+            reader.read(wkt);
+        } catch (ParseException e) {
+            return false;
+        }
+        return true;
     }
-    
 }
