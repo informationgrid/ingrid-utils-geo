@@ -22,16 +22,20 @@
  */
 package de.ingrid.geo.utils;
 
-import de.ingrid.geo.utils.boundingbox.BoundingBoxUtils;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class BoundingBoxTest extends TestCase {
+import de.ingrid.geo.utils.boundingbox.BoundingBoxUtils;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+public class BoundingBoxTest {
 
     double[] coord1 = { 8.22971710656067, 53.3197061130618};
     double[] coord2 = { 10.5035995762954, 54.1281513544974};
     double[] coord3 = { 6.92009188388852, 52.9777914432664}; 
     double[] coord4 = { 9.07744917466639, 54.407905432226};
 
+    @Test
     public void testDistance() {
         assertNotNull(Utils.getDistance(coord1, coord2));
         assertNotNull(BoundingBoxUtils.getInstance().getSquareBoxOfBoundingBox(coord1, coord2));

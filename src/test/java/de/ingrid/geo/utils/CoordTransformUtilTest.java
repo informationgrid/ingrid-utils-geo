@@ -23,15 +23,18 @@
 package de.ingrid.geo.utils;
 
 import org.geotools.referencing.operation.projection.MapProjection;
+import org.junit.jupiter.api.Test;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.TransformException;
 
 import de.ingrid.geo.utils.transformation.CoordTransformUtil;
 import de.ingrid.geo.utils.transformation.CoordTransformUtil.CoordType;
-import junit.framework.TestCase;
 
-public class CoordTransformUtilTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+public class CoordTransformUtilTest {
+
+    @Test
     public void testTransformToWGS84() throws FactoryException, TransformException {
         /*
          *     Not in use because geotools throw exception
