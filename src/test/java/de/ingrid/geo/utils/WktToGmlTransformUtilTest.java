@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-utils-geo
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -26,6 +26,7 @@ import java.io.IOException;
 
 import javax.xml.transform.TransformerException;
 
+import org.junit.jupiter.api.Test;
 import org.locationtech.jts.io.ParseException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -34,11 +35,13 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import de.ingrid.geo.utils.transformation.WktToGmlTransformUtil;
-import junit.framework.TestCase;
 
-public class WktToGmlTransformUtilTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-	public void testPointString() throws ParseException, IOException {
+public class WktToGmlTransformUtilTest {
+
+    @Test
+    public void testPointString() throws ParseException, IOException {
 		String wkt = "POINT(30 10)";
 		String gml = WktToGmlTransformUtil.wktToGml3AsString(wkt);
 
@@ -50,7 +53,8 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
-	public void testPointDom() throws ParseException, IOException, TransformerException, SAXException {
+    @Test
+    public void testPointDom() throws ParseException, IOException, TransformerException, SAXException {
 		String wkt = "POINT(30 10)";
 		Document gml = WktToGmlTransformUtil.wktToGml3AsDom(wkt);
 
@@ -62,6 +66,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals("30 10", pos.getTextContent());
 	}
 
+    @Test
     public void testPointElement() throws ParseException, IOException, TransformerException, SAXException {
         String wkt = "POINT(30 10)";
         Element gml = WktToGmlTransformUtil.wktToGml3AsElement(wkt);
@@ -72,7 +77,8 @@ public class WktToGmlTransformUtilTest extends TestCase {
         assertEquals("30 10", pos.getTextContent());
     }
 
-	public void testMultiPointString() throws ParseException, IOException {
+    @Test
+    public void testMultiPointString() throws ParseException, IOException {
 		String wkt = "MULTIPOINT ((10 40), (40 30), (20 20), (30 10))";
 		String gml = WktToGmlTransformUtil.wktToGml3AsString(wkt);
 
@@ -103,7 +109,8 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
-	public void testMultiPointDom() throws ParseException, IOException, TransformerException, SAXException {
+    @Test
+    public void testMultiPointDom() throws ParseException, IOException, TransformerException, SAXException {
 		String wkt = "MULTIPOINT ((10 40), (40 30), (20 20), (30 10))";
 		Document gml = WktToGmlTransformUtil.wktToGml3AsDom(wkt);
 
@@ -139,7 +146,8 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals("30 10", pos.getTextContent());
 	}
 
-	public void testLinestringString() throws ParseException, IOException {
+    @Test
+    public void testLinestringString() throws ParseException, IOException {
 		String wkt = "LINESTRING (30 10, 10 30, 40 40)";
 		String gml = WktToGmlTransformUtil.wktToGml3AsString(wkt);
 
@@ -151,7 +159,8 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
-	public void testLinstringDom() throws ParseException, IOException, TransformerException, SAXException {
+    @Test
+    public void testLinstringDom() throws ParseException, IOException, TransformerException, SAXException {
 		String wkt = "LINESTRING (30 10, 10 30, 40 40)";
 		Document gml = WktToGmlTransformUtil.wktToGml3AsDom(wkt);
 
@@ -163,7 +172,8 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals("30 10 10 30 40 40", posList.getTextContent());
 	}
 
-	public void testMultiLinestringString() throws ParseException, IOException {
+    @Test
+    public void testMultiLinestringString() throws ParseException, IOException {
 		String wkt = "MULTILINESTRING ((10 10, 20 20, 10 40), (40 40, 30 30, 40 20, 30 10))";
 		String gml = WktToGmlTransformUtil.wktToGml3AsString(wkt);
 
@@ -184,7 +194,8 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
-	public void testMultiLinstringDom() throws ParseException, IOException, TransformerException, SAXException {
+    @Test
+    public void testMultiLinstringDom() throws ParseException, IOException, TransformerException, SAXException {
 		String wkt = "MULTILINESTRING ((10 10, 20 20, 10 40), (40 40, 30 30, 40 20, 30 10))";
 		Document gml = WktToGmlTransformUtil.wktToGml3AsDom(wkt);
 
@@ -208,7 +219,8 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals("40 40 30 30 40 20 30 10", posList.getTextContent());
 	}
 
-	public void testPolygonString() throws ParseException, IOException {
+    @Test
+    public void testPolygonString() throws ParseException, IOException {
 		String wkt = "POLYGON ((35 10, 45 45, 15 40, 10 20, 35 10), (20 30, 35 35, 30 20, 20 30))";
 		String gml = WktToGmlTransformUtil.wktToGml3AsString(wkt);
 
@@ -229,7 +241,8 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
-	public void testPolygonDom() throws ParseException, IOException, TransformerException, SAXException {
+    @Test
+    public void testPolygonDom() throws ParseException, IOException, TransformerException, SAXException {
 		String wkt = "POLYGON ((35 10, 45 45, 15 40, 10 20, 35 10), (20 30, 35 35, 30 20, 20 30))";
 		Document gml = WktToGmlTransformUtil.wktToGml3AsDom(wkt);
 
@@ -253,7 +266,8 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals("20 30 35 35 30 20 20 30", posList.getTextContent());
 	}
 
-	public void testMultiPolygonString() throws ParseException, IOException {
+    @Test
+    public void testMultiPolygonString() throws ParseException, IOException {
 		String wkt = "MULTIPOLYGON (((40 40, 20 45, 45 30, 40 40)), ((20 35, 10 30, 10 10, 30 5, 45 20, 20 35), (30 20, 20 15, 20 25, 30 20)))";
 		String gml = WktToGmlTransformUtil.wktToGml3AsString(wkt);
 
@@ -287,7 +301,8 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
-	public void testMultiPolygonDom() throws ParseException, IOException, TransformerException, SAXException {
+    @Test
+    public void testMultiPolygonDom() throws ParseException, IOException, TransformerException, SAXException {
 		String wkt = "MULTIPOLYGON (((40 40, 20 45, 45 30, 40 40)), ((20 35, 10 30, 10 10, 30 5, 45 20, 20 35), (30 20, 20 15, 20 25, 30 20)))";
 		Document gml = WktToGmlTransformUtil.wktToGml3AsDom(wkt);
 
@@ -326,7 +341,8 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals("30 20 20 15 20 25 30 20", posList.getTextContent());
 	}
 
-	public void testMultiGeometryString() throws ParseException, IOException {
+    @Test
+    public void testMultiGeometryString() throws ParseException, IOException {
 		String wkt = "GEOMETRYCOLLECTION (POINT (40 10), LINESTRING (10 10, 20 20, 10 40), POLYGON ((40 40, 20 45, 45 30, 40 40)))";
 		String gml = WktToGmlTransformUtil.wktToGml3AsString(wkt);
 
@@ -356,7 +372,8 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
-	public void testMultiGeometryDom() throws ParseException, IOException, TransformerException, SAXException {
+    @Test
+    public void testMultiGeometryDom() throws ParseException, IOException, TransformerException, SAXException {
 		String wkt = "GEOMETRYCOLLECTION (POINT (40 10), LINESTRING (10 10, 20 20, 10 40), POLYGON ((40 40, 20 45, 45 30, 40 40)))";
 		Document gml = WktToGmlTransformUtil.wktToGml3AsDom(wkt);
 
@@ -421,6 +438,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
 		return null;
 	}
 
+    @Test
     public void testPointString3_2() throws ParseException, IOException {
         String wkt = "POINT(30 10)";
         String gml = WktToGmlTransformUtil.wktToGml3_2AsString(wkt);
@@ -433,6 +451,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
         assertEquals(expected, actual);
     }
 
+    @Test
     public void testMultiPointString3_2() throws ParseException, IOException {
         String wkt = "MULTIPOINT ((10 40), (40 30), (20 20), (30 10))";
         String gml = WktToGmlTransformUtil.wktToGml3_2AsString(wkt);
@@ -464,6 +483,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
         assertEquals(expected, actual);
     }
 
+    @Test
     public void testLinestringString3_2() throws ParseException, IOException {
         String wkt = "LINESTRING (30 10, 10 30, 40 40)";
         String gml = WktToGmlTransformUtil.wktToGml3_2AsString(wkt);
@@ -476,6 +496,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
         assertEquals(expected, actual);
     }
 
+    @Test
     public void testMultiLinestringString3_2() throws ParseException, IOException {
         String wkt = "MULTILINESTRING ((10 10, 20 20, 10 40), (40 40, 30 30, 40 20, 30 10))";
         String gml = WktToGmlTransformUtil.wktToGml3_2AsString(wkt);
@@ -497,6 +518,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
         assertEquals(expected, actual);
     }
 
+    @Test
     public void testPolygonString3_2() throws ParseException, IOException {
         String wkt = "POLYGON ((35 10, 45 45, 15 40, 10 20, 35 10), (20 30, 35 35, 30 20, 20 30))";
         String gml = WktToGmlTransformUtil.wktToGml3_2AsString(wkt);
@@ -518,6 +540,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
         assertEquals(expected, actual);
     }
 
+    @Test
     public void testMultiPolygonString3_2() throws ParseException, IOException {
         String wkt = "MULTIPOLYGON (((40 40, 20 45, 45 30, 40 40)), ((20 35, 10 30, 10 10, 30 5, 45 20, 20 35), (30 20, 20 15, 20 25, 30 20)))";
         String gml = WktToGmlTransformUtil.wktToGml3_2AsString(wkt);
@@ -552,6 +575,7 @@ public class WktToGmlTransformUtilTest extends TestCase {
         assertEquals(expected, actual);
     }
 
+    @Test
     public void testMultiGeometryString3_2() throws ParseException, IOException {
         String wkt = "GEOMETRYCOLLECTION (POINT (40 10), LINESTRING (10 10, 20 20, 10 40), POLYGON ((40 40, 20 45, 45 30, 40 40)))";
         String gml = WktToGmlTransformUtil.wktToGml3_2AsString(wkt);
@@ -581,7 +605,8 @@ public class WktToGmlTransformUtilTest extends TestCase {
                 "</gml:MultiGeometry>";
         assertEquals(expected, actual);
     }
-    
+
+    @Test
     public void testMultiGeometryDom3_2() throws ParseException, IOException, TransformerException, SAXException {
         String wkt = "GEOMETRYCOLLECTION (POINT (40 10), LINESTRING (10 10, 20 20, 10 40), POLYGON ((40 40, 20 45, 45 30, 40 40)))";
         Document gml = WktToGmlTransformUtil.wktToGml3_2AsDom(wkt);

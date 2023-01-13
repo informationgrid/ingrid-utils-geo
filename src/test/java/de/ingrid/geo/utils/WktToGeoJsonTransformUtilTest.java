@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-utils-geo
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -24,6 +24,7 @@ package de.ingrid.geo.utils;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.Test;
 import org.locationtech.jts.io.ParseException;
 import org.opengis.geometry.MismatchedDimensionException;
 import org.opengis.referencing.FactoryException;
@@ -31,11 +32,13 @@ import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.referencing.operation.TransformException;
 
 import de.ingrid.geo.utils.transformation.WktToGeoJsonTransformUtil;
-import junit.framework.TestCase;
 
-public class WktToGeoJsonTransformUtilTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-	public void testPoint() throws ParseException, IOException {
+public class WktToGeoJsonTransformUtilTest {
+
+    @Test
+    public void testPoint() throws ParseException, IOException {
 		String wkt = "POINT(30 10)";
 		String geojson = WktToGeoJsonTransformUtil.wktToGeoJson(wkt);
 
@@ -43,7 +46,8 @@ public class WktToGeoJsonTransformUtilTest extends TestCase {
 		assertEquals(expected, geojson);
 	}
 
-	public void testMultiPoint() throws ParseException, IOException {
+    @Test
+    public void testMultiPoint() throws ParseException, IOException {
 		String wkt = "MULTIPOINT ((10 40), (40 30), (20 20), (30 10))";
 		String geojson = WktToGeoJsonTransformUtil.wktToGeoJson(wkt);
 
@@ -51,7 +55,8 @@ public class WktToGeoJsonTransformUtilTest extends TestCase {
 		assertEquals(expected, geojson);
 	}
 
-	public void testLinestring() throws ParseException, IOException {
+    @Test
+    public void testLinestring() throws ParseException, IOException {
 		String wkt = "LINESTRING (30 10, 10 30, 40 40)";
 		String geojson = WktToGeoJsonTransformUtil.wktToGeoJson(wkt);
 
@@ -59,7 +64,8 @@ public class WktToGeoJsonTransformUtilTest extends TestCase {
 		assertEquals(expected, geojson);
 	}
 
-	public void testMultiLinestring() throws ParseException, IOException {
+    @Test
+    public void testMultiLinestring() throws ParseException, IOException {
 		String wkt = "MULTILINESTRING ((10 10, 20 20, 10 40), (40 40, 30 30, 40 20, 30 10))";
 		String geojson = WktToGeoJsonTransformUtil.wktToGeoJson(wkt);
 
@@ -67,7 +73,8 @@ public class WktToGeoJsonTransformUtilTest extends TestCase {
 		assertEquals(expected, geojson);
 	}
 
-	public void testPolygon() throws ParseException, IOException {
+    @Test
+    public void testPolygon() throws ParseException, IOException {
 		String wkt = "POLYGON ((35 10, 45 45, 15 40, 10 20, 35 10), (20 30, 35 35, 30 20, 20 30))";
 		String geojson = WktToGeoJsonTransformUtil.wktToGeoJson(wkt);
 
@@ -75,7 +82,8 @@ public class WktToGeoJsonTransformUtilTest extends TestCase {
 		assertEquals(expected, geojson);
 	}
 
-	public void testMultiPolygon() throws ParseException, IOException {
+    @Test
+    public void testMultiPolygon() throws ParseException, IOException {
 		String wkt = "MULTIPOLYGON (((40 40, 20 45, 45 30, 40 40)), ((20 35, 10 30, 10 10, 30 5, 45 20, 20 35), (30 20, 20 15, 20 25, 30 20)))";
 		String geojson = WktToGeoJsonTransformUtil.wktToGeoJson(wkt);
 
@@ -83,7 +91,8 @@ public class WktToGeoJsonTransformUtilTest extends TestCase {
 		assertEquals(expected, geojson);
 	}
 
-	public void testMultiGeometry() throws ParseException, IOException {
+    @Test
+    public void testMultiGeometry() throws ParseException, IOException {
 		String wkt = "GEOMETRYCOLLECTION (POINT (40 10), LINESTRING (10 10, 20 20, 10 40), POLYGON ((40 40, 20 45, 45 30, 40 40)))";
 		String geojson = WktToGeoJsonTransformUtil.wktToGeoJson(wkt);
 
@@ -94,7 +103,8 @@ public class WktToGeoJsonTransformUtilTest extends TestCase {
 		assertEquals(expected, geojson);
 	}
 
-   public void testPointTransform() throws ParseException, IOException, MismatchedDimensionException, NoSuchAuthorityCodeException, FactoryException, TransformException {
+    @Test
+    public void testPointTransform() throws ParseException, IOException, MismatchedDimensionException, NoSuchAuthorityCodeException, FactoryException, TransformException {
         String wkt = "POINT(30 10)";
         String geojson = WktToGeoJsonTransformUtil.wktToGeoJsonTransform(wkt, "4326", "3857");
 
@@ -102,7 +112,8 @@ public class WktToGeoJsonTransformUtilTest extends TestCase {
         assertEquals(expected, geojson);
     }
 
-   public void testMultiGeometryTransform() throws ParseException, IOException, MismatchedDimensionException, NoSuchAuthorityCodeException, FactoryException, TransformException {
+    @Test
+    public void testMultiGeometryTransform() throws ParseException, IOException, MismatchedDimensionException, NoSuchAuthorityCodeException, FactoryException, TransformException {
        String wkt = "GEOMETRYCOLLECTION (POINT (40 10), LINESTRING (10 10, 20 20, 10 40), POLYGON ((40 40, 20 45, 45 30, 40 40)))";
        String geojson = WktToGeoJsonTransformUtil.wktToGeoJsonTransform(wkt, "4326", "3857");
 
