@@ -24,14 +24,16 @@ package de.ingrid.geo.utils.transformation;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.geotools.geojson.geom.GeometryJSON;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.WKTReader2;
-import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.Polygon;
 import org.geotools.referencing.CRS;
 import org.locationtech.jts.algorithm.Orientation;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.io.ParseException;
 import org.opengis.geometry.MismatchedDimensionException;
 import org.opengis.referencing.FactoryException;
@@ -58,8 +60,9 @@ public final class WktToGeoJsonTransformUtil extends WktUtil {
 	public static String wktToGeoJson(String wkt) throws ParseException, IOException {
 		WKTReader2 reader = new WKTReader2();
 		Geometry geometry = reader.read(wkt);
-		geometry = checkOrientation(geometry);
-
+		if(geometry.isValid()) {
+            geometry = checkOrientation(geometry);
+        }
 		GeometryJSON geometryJSON = new GeometryJSON(10);
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		geometryJSON.write(geometry, out);
@@ -71,13 +74,15 @@ public final class WktToGeoJsonTransformUtil extends WktUtil {
 	}
 
     public static String wktToGeoJsonTransform(String wkt, String srcEpsg, String dstEpsg) throws ParseException, IOException, NoSuchAuthorityCodeException, FactoryException, MismatchedDimensionException, TransformException {
-        WKTReader2 reader = new WKTReader2();
-        Geometry geometry = reader.read(wkt);
-        geometry = checkOrientation(geometry);
         CoordinateReferenceSystem sourceCRS = CRS.parseWKT(CoordTransformUtil.getInstance().getWKTString(CoordTransformUtil.getInstance().getCoordTypeByEPSGCode(srcEpsg)));;
         CoordinateReferenceSystem targetCRS = CRS.parseWKT(CoordTransformUtil.getInstance().getWKTString(CoordTransformUtil.getInstance().getCoordTypeByEPSGCode(dstEpsg)));
-
         MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS, true);
+
+        WKTReader2 reader = new WKTReader2();
+        Geometry geometry = reader.read(wkt);
+        if(geometry.isValid()) {
+            geometry = checkOrientation(geometry);
+        }
         GeometryJSON geometryJSON = new GeometryJSON(10);
         Geometry targetGeometry = JTS.transform(geometry, transform);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -86,13 +91,14 @@ public final class WktToGeoJsonTransformUtil extends WktUtil {
     }
     
     private static Geometry checkOrientation(Geometry geom) {
-        // Check polygon orientation
         Geometry tmpGeom = geom;
         switch (tmpGeom.getGeometryType()) {
+        // Check polygon orientation
         case Polygon.TYPENAME_POLYGON:
-            Polygon pol = (Polygon) tmpGeom;
-            if(Orientation.isCCW(tmpGeom.getCoordinates()) && pol.getNumInteriorRing() == 0) {
-                tmpGeom = geom.reverse();
+            if(tmpGeom.isValid()) {
+                if(Orientation.isCCW(tmpGeom.getCoordinates())) {
+                    tmpGeom = tmpGeom.reverse();
+                }
             }
             break;
         default:
