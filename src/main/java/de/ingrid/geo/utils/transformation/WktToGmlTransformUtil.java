@@ -28,9 +28,11 @@ import java.util.UUID;
 import javax.xml.namespace.QName;
 import javax.xml.transform.TransformerException;
 
+import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.WKTReader2;
 import org.geotools.gml3.GML;
 import org.geotools.gml3.GMLConfiguration;
+import org.geotools.referencing.CRS;
 import org.geotools.xsd.Configuration;
 import org.geotools.xsd.Encoder;
 import org.locationtech.jts.geom.Geometry;
@@ -43,6 +45,11 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
+import org.opengis.geometry.MismatchedDimensionException;
+import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.opengis.referencing.operation.MathTransform;
+import org.opengis.referencing.operation.TransformException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -177,6 +184,21 @@ public class WktToGmlTransformUtil extends WktUtil {
         }
     }
 
+    public static String wktToGml3_2AsString(String wkt, String srcEpsg) throws ParseException, IOException, FactoryException, TransformException {
+        return wktToGml3_2AsString(wkt, srcEpsg, "4326");
+    }
+
+    public static String wktToGml3_2AsString(String wkt, String srcEpsg, String dstEpsg) throws ParseException, IOException, FactoryException, TransformException {
+        CoordinateReferenceSystem sourceCRS = CRS.parseWKT(CoordTransformUtil.getInstance().getWKTString(CoordTransformUtil.getInstance().getCoordTypeByEPSGCode(srcEpsg)));;
+        CoordinateReferenceSystem targetCRS = CRS.parseWKT(CoordTransformUtil.getInstance().getWKTString(CoordTransformUtil.getInstance().getCoordTypeByEPSGCode(dstEpsg)));
+        MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS, true);
+        WKTReader2 reader = new WKTReader2();
+        Geometry geometry = reader.read(wkt);
+        Geometry targetGeometry = JTS.transform(geometry, transform);
+        return wktToGml3_2AsString(targetGeometry.toString());
+
+    }
+
     public static Document wktToGml3_2AsDom(String wkt) throws ParseException, IOException, TransformerException, SAXException    {
         Document doc = wktToGml3_2(wkt, Document.class);
         String[] tagNames = {"Point", "MultiPoint", "LineString", "MultiCurve", "Polygon", "MultiSurface", "MultiGeometry"};
@@ -191,6 +213,22 @@ public class WktToGmlTransformUtil extends WktUtil {
         return doc;
     }
 
+    public static Document wktToGml3_2AsDom(String wkt, String srcEpsg) throws ParseException, IOException, TransformerException, SAXException, FactoryException, MismatchedDimensionException, TransformException    {
+        return wktToGml3_2AsDom(wkt, srcEpsg, "4326");
+    }
+
+    public static Document wktToGml3_2AsDom(String wkt, String srcEpsg, String dstEpsg) throws ParseException, IOException, TransformerException, SAXException, FactoryException, MismatchedDimensionException, TransformException {
+        CoordinateReferenceSystem sourceCRS = CRS.parseWKT(CoordTransformUtil.getInstance().getWKTString(CoordTransformUtil.getInstance().getCoordTypeByEPSGCode(srcEpsg)));;
+        CoordinateReferenceSystem targetCRS = CRS.parseWKT(CoordTransformUtil.getInstance().getWKTString(CoordTransformUtil.getInstance().getCoordTypeByEPSGCode(dstEpsg)));
+        MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS, true);
+        WKTReader2 reader = new WKTReader2();
+        Geometry geometry = reader.read(wkt);
+        Geometry targetGeometry = JTS.transform(geometry, transform);
+
+        return wktToGml3_2AsDom(targetGeometry.toText());
+    }
+
+        
     public static Element wktToGml3_2AsElement(String wkt) throws ParseException, IOException, TransformerException, SAXException    {
         Document doc = wktToGml3_2AsDom(wkt);
         if(doc != null) {
@@ -199,6 +237,21 @@ public class WktToGmlTransformUtil extends WktUtil {
         } else {
             throw new IllegalArgumentException("Cannot convert: " + wkt);
         }
+    }
+
+    public static Element wktToGml3_2AsElement(String wkt, String srcEpsg) throws ParseException, IOException, TransformerException, SAXException, FactoryException, TransformException    {
+        return wktToGml3_2AsElement(wkt, srcEpsg, "4326");
+    }
+
+    public static Element wktToGml3_2AsElement(String wkt, String srcEpsg, String dstEpsg) throws ParseException, IOException, TransformerException, SAXException, FactoryException, TransformException {
+        CoordinateReferenceSystem sourceCRS = CRS.parseWKT(CoordTransformUtil.getInstance().getWKTString(CoordTransformUtil.getInstance().getCoordTypeByEPSGCode(srcEpsg)));;
+        CoordinateReferenceSystem targetCRS = CRS.parseWKT(CoordTransformUtil.getInstance().getWKTString(CoordTransformUtil.getInstance().getCoordTypeByEPSGCode(dstEpsg)));
+        MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS, true);
+        WKTReader2 reader = new WKTReader2();
+        Geometry geometry = reader.read(wkt);
+        Geometry targetGeometry = JTS.transform(geometry, transform);
+
+        return wktToGml3_2AsElement(targetGeometry.toText());
     }
 
     private static <T> T wktToGml3_2(String wkt, Class<T> klasse) throws ParseException, IOException, TransformerException, SAXException {

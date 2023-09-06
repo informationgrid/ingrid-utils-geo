@@ -24,7 +24,6 @@ package de.ingrid.geo.utils.transformation;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import org.geotools.geojson.geom.GeometryJSON;
 import org.geotools.geometry.jts.JTS;
@@ -32,7 +31,6 @@ import org.geotools.geometry.jts.WKTReader2;
 import org.geotools.referencing.CRS;
 import org.locationtech.jts.algorithm.Orientation;
 import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.io.ParseException;
 import org.opengis.geometry.MismatchedDimensionException;
