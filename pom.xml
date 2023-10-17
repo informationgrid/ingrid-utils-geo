@@ -7,7 +7,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-utils-geo</artifactId>
   <packaging>jar</packaging>
-  <version>6.2.0</version>
+  <version>6.3.0</version>
   <name>ingrid-utils-geo</name>
   <scm>
     <connection>scm:git:git@github.com:informationgrid/ingrid-utils-geo.git</connection>
@@ -16,7 +16,7 @@
   </scm>
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
-    <geotools.version>20.5</geotools.version>
+    <geotools.version>29.2</geotools.version>
   </properties>
   <repositories>
     <!-- NEVER DELETE: InGrid repo needed for download of parent pom if not 
@@ -49,6 +49,16 @@
     <dependency>
       <groupId>org.geotools</groupId>
       <artifactId>gt-xml</artifactId>
+      <version>${geotools.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.geotools.xsd</groupId>
+      <artifactId>gt-xsd-gml3</artifactId>
+      <version>${geotools.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.geotools.xsd</groupId>
+      <artifactId>gt-xsd-core</artifactId>
       <version>${geotools.version}</version>
     </dependency>
     <dependency>

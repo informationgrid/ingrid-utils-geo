@@ -28,6 +28,9 @@ import javax.xml.transform.TransformerException;
 
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.io.ParseException;
+import org.opengis.geometry.MismatchedDimensionException;
+import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.operation.TransformException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -37,6 +40,7 @@ import org.xml.sax.SAXException;
 import de.ingrid.geo.utils.transformation.WktToGmlTransformUtil;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class WktToGmlTransformUtilTest {
 
@@ -267,7 +271,7 @@ public class WktToGmlTransformUtilTest {
 	}
 
     @Test
-    public void testMultiPolygonString() throws ParseException, IOException {
+    public void testMultiPolygonString() throws ParseException, IOException, MismatchedDimensionException, FactoryException, TransformException {
 		String wkt = "MULTIPOLYGON (((40 40, 20 45, 45 30, 40 40)), ((20 35, 10 30, 10 10, 30 5, 45 20, 20 35), (30 20, 20 15, 20 25, 30 20)))";
 		String gml = WktToGmlTransformUtil.wktToGml3AsString(wkt);
 
@@ -299,10 +303,11 @@ public class WktToGmlTransformUtilTest {
 				  "</gml:polygonMember>" +
 				"</gml:MultiPolygon>";
 		assertEquals(expected, actual);
+
 	}
 
     @Test
-    public void testMultiPolygonDom() throws ParseException, IOException, TransformerException, SAXException {
+    public void testMultiPolygonDom() throws ParseException, IOException, TransformerException, SAXException, FactoryException, TransformException {
 		String wkt = "MULTIPOLYGON (((40 40, 20 45, 45 30, 40 40)), ((20 35, 10 30, 10 10, 30 5, 45 20, 20 35), (30 20, 20 15, 20 25, 30 20)))";
 		Document gml = WktToGmlTransformUtil.wktToGml3AsDom(wkt);
 
@@ -339,6 +344,7 @@ public class WktToGmlTransformUtilTest {
 		posList = getFirstElementChild(linearRing);
 		assertEquals("gml:posList", posList.getTagName());
 		assertEquals("30 20 20 15 20 25 30 20", posList.getTextContent());
+		
 	}
 
     @Test
