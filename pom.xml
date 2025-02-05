@@ -16,7 +16,7 @@
   </scm>
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
-    <geotools.version>29.2</geotools.version>
+    <geotools.version>29.6</geotools.version>
   </properties>
   <repositories>
     <!-- NEVER DELETE: InGrid repo needed for download of parent pom if not 
