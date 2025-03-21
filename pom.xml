@@ -7,7 +7,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-utils-geo</artifactId>
   <packaging>jar</packaging>
-  <version>7.0.0</version>
+  <version>7.5.0</version>
   <name>ingrid-utils-geo</name>
   <scm>
     <connection>scm:git:git@github.com:informationgrid/ingrid-utils-geo.git</connection>
@@ -16,10 +16,10 @@
   </scm>
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
-    <geotools.version>29.2</geotools.version>
+    <geotools.version>29.6</geotools.version>
   </properties>
   <repositories>
-    <!-- NEVER DELETE: InGrid repo needed for download of parent pom if not 
+    <!-- NEVER DELETE: InGrid repo needed for download of parent pom if not
       present ! -->
     <repository>
       <id>nexus</id>
@@ -113,7 +113,7 @@
           <executable>java</executable>
           <arguments>
             <argument>-classpath</argument>
-            <!-- automatically creates the classpath using all project dependencies, 
+            <!-- automatically creates the classpath using all project dependencies,
               also adding the project build directory -->
             <classpath />
             <argument>de.ingrid.geo.utils.example.CoordinateTransformation</argument>
