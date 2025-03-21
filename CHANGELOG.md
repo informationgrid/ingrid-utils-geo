@@ -1,4 +1,11 @@
 
+## 7.5.0 (21.03.2025)
+
+
+### Bugfixes
+
+* Sicherheitslücke in GeoTools und Commons Collection Bibliothek (#7326)
+    
 ## 7.0.0 (05.01.2024)
 
 ### Features
